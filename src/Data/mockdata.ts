@@ -16,6 +16,7 @@ import type {
   Order,
   Product,
   NavGroup,
+  RecentProject,
 } from "../Types/types";
 
 // ── Navigation ───────────────────────────────────────────────
@@ -43,9 +44,20 @@ export const navGroups: NavGroup[] = [
   //     { id: "apikeys", label: "Api Keys", icon: "RiKeyLine", path: "/api-keys" },
   //   ],
   // },
+
+
   {
     title: "Pages",
     items: [
+        {
+        id: "auth", label: "Management", icon: "RiShieldLine", path: "/auth",
+        children: [
+          { id: "partner-verify", label: "Partner-List", icon: "FaAddressCard", path: "/auth/verifypartner" },
+          // { id: "auth-register", label: "Register", icon: "RiUserAddLine", path: "/auth/register" },
+        ],
+      },
+
+
       // { id: "profile", label: "Profile", icon: "RiUserLine", path: "/profile" },
       { id: "users", label: "Users", icon: "RiGroupLine", path: "/users" },
       {
@@ -347,3 +359,12 @@ export const visitData:any = [
   { month: "Sep", visits: 8600 }, { month: "Oct", visits: 11200 },
 ];
 
+
+export const mockProjects: RecentProject[] = [
+  { id: "1", orderId: "#201238", clientName: "Sagar Jadhav", deliveryPartner: "Rahul Jagtap", startDate: "17 July 2024", deadline: "17 July 2026", transactionOk: true },
+  { id: "2", orderId: "#201239", clientName: "Amit Sharma", deliveryPartner: "Priya Nair", startDate: "18 July 2024", deadline: "18 July 2026", transactionOk: false },
+  { id: "3", orderId: "#201240", clientName: "Neha Kulkarni", deliveryPartner: "Rohan Mehta", startDate: "19 July 2024", deadline: "19 July 2026", transactionOk: true },
+  { id: "4", orderId: "#201241", clientName: "Vijay Patil", deliveryPartner: "Sneha Desai", startDate: "20 July 2024", deadline: "20 July 2026", transactionOk: true },
+  { id: "5", orderId: "#201242", clientName: "Kavya Reddy", deliveryPartner: "Arjun Singh", startDate: "21 July 2024", deadline: "21 July 2026", transactionOk: false },
+  { id: "6", orderId: "#201243", clientName: "Raj Kumar", deliveryPartner: "Divya Rao", startDate: "22 July 2024", deadline: "22 July 2026", transactionOk: true },
+];

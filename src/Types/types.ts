@@ -181,3 +181,50 @@ export interface Product {
   image: string;
   status: "in-stock" | "low-stock" | "out-of-stock";
 }
+
+
+export interface RecentProject {
+  id: string;
+  orderId: string;
+  clientName: string;
+  deliveryPartner: string;
+  startDate: string;
+  deadline: string;
+  transactionOk: boolean;
+}
+
+
+
+
+
+// list data of partner
+export interface PartnerListItem {
+  id: string;
+  imageUrl: string;
+  mobile_number: string;
+  full_name: string | null;
+  status: "pending" | "approved" | "rejected";
+  is_active: boolean;
+  is_online: boolean;
+  created_at: string;
+}
+
+
+// login res
+export interface LoginResponse {
+  status: string;
+  message: string;
+}
+
+
+//partner docs data
+export interface PartnerDocs {
+  vehiclePhoto?: string;
+  vehicleDocument?: string;
+  aadhaarImageUrl?: string;
+  aadhaarPdfUrl?: string;
+  panCardUrl?: string;
+  profilePhotoUrl?: string;
+}
+
+

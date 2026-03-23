@@ -3,13 +3,17 @@ import { Outlet } from "react-router-dom";
 import { SidebarContext, useSidebarState } from "./SidebarContext";
 import Sidebar from "../dashboards/Sidebar";
 import Topbar from "./Topbar";
+import {ThemeContext, useThemeState } from "./darkmode";
 
 
 
 const DashboardLayout: React.FC = () => {
   const sidebarState = useSidebarState();
+  const themeState = useThemeState();
 
   return (
+        <ThemeContext.Provider value={themeState}>
+
     <SidebarContext.Provider value={sidebarState}>
       <div className="flex h-screen bg-gray-50 overflow-hidden">
         {/* Sidebar */}
@@ -31,12 +35,14 @@ const DashboardLayout: React.FC = () => {
           `}
         >
           <Topbar />
-          <main className="flex-1 overflow-y-auto p-4 md:p-6">
+          <main className="flex-1 dark:bg-[#0f0f12]  overflow-y-auto p-4 md:p-6">
             <Outlet />
           </main>
         </div>
       </div>
     </SidebarContext.Provider>
+        </ThemeContext.Provider>
+
   );
 };
 

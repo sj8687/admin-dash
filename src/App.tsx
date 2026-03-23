@@ -8,6 +8,7 @@ import DashboardLayout from "./Component/layouts/DashboardLayout";
 import ProjectManagementPage from "./Pages/ProjectManagementPage";
 import AnalyticsPage from "./Pages/AnalyticsPage";
 import UsersPage from "./Pages/UsersPage";
+import PartnerListTable from "./Pages/PartnerVerifylist";
 // import DashboardLayout from "./DashboardLayout";
 // import AnalyticsPage from "./components/ui/Analytics";
 // import PlaceholderPage from "./components/ui/placeholderpage";
@@ -64,9 +65,9 @@ const App: React.FC = () => {
           <Route path="/orders/detail" element={<PlaceholderPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/list" element={<ProductsPage />} />
-          <Route path="/products/add" element={<PlaceholderPage />} />
-          <Route path="/auth/login" element={<PlaceholderPage />} />
-          <Route path="/auth/register" element={<PlaceholderPage />} />  */}
+          <Route path="/products/add" element={<PlaceholderPage />} /> */}
+          <Route path="/auth/verifypartner" element={<PartnerListTable />} />
+          {/* <Route path="/auth/register" element={<PlaceholderPage />} />  */}
 
           {/* Catch-all */}
           {/* <Route path="*" element={<PlaceholderPage />} /> */}
