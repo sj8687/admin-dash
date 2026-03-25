@@ -17,6 +17,7 @@ import type {
   Product,
   NavGroup,
   RecentProject,
+  Transaction,
 } from "../Types/types";
 
 // ── Navigation ───────────────────────────────────────────────
