@@ -53,7 +53,7 @@ export const navGroups: NavGroup[] = [
         id: "auth", label: "Management", icon: "RiShieldLine", path: "/auth",
         children: [
           { id: "partner-verify", label: "Partner-List", icon: "FaAddressCard", path: "/auth/verifypartner" },
-          // { id: "auth-register", label: "Register", icon: "RiUserAddLine", path: "/auth/register" },
+          { id: "transaction-history", label: "Transaction-History", icon: "TbTransactionRupee", path: "/auth/transaction" },
         ],
       },
 
@@ -367,4 +367,20 @@ export const mockProjects: RecentProject[] = [
   { id: "4", orderId: "#201241", clientName: "Vijay Patil", deliveryPartner: "Sneha Desai", startDate: "20 July 2024", deadline: "20 July 2026", transactionOk: true },
   { id: "5", orderId: "#201242", clientName: "Kavya Reddy", deliveryPartner: "Arjun Singh", startDate: "21 July 2024", deadline: "21 July 2026", transactionOk: false },
   { id: "6", orderId: "#201243", clientName: "Raj Kumar", deliveryPartner: "Divya Rao", startDate: "22 July 2024", deadline: "22 July 2026", transactionOk: true },
+];
+
+
+export const DUMMY_TRANSACTIONS: Transaction[] = [
+  { id: "1",  trackingId: "#201238", clientName: "Shreyash Jadhav", deliveryPartnerName: "Sanket Inamdar", dateTime: "2026-03-01T10:30:00Z", amount: 245, status: "pending"    },
+  { id: "2",  trackingId: "#201239", clientName: "Ravi Kumar",      deliveryPartnerName: "Priya Sharma",   dateTime: "2026-03-01T11:00:00Z", amount: 180, status: "failed"     },
+  { id: "3",  trackingId: "#201240", clientName: "Neha Patil",      deliveryPartnerName: "Rohit Desai",    dateTime: "2026-03-01T12:15:00Z", amount: 320, status: "processing" },
+  { id: "4",  trackingId: "#201241", clientName: "Ajay Singh",      deliveryPartnerName: "Meena Joshi",    dateTime: "2026-03-02T09:00:00Z", amount: 150, status: "success"    },
+  { id: "5",  trackingId: "#201242", clientName: "Priya Sharma",    deliveryPartnerName: "Vikram Rao",     dateTime: "2026-03-02T10:45:00Z", amount: 410, status: "pending"    },
+  { id: "6",  trackingId: "#201243", clientName: "Kiran Nair",      deliveryPartnerName: "Sunita More",    dateTime: "2026-03-02T13:30:00Z", amount: 275, status: "success"    },
+  { id: "7",  trackingId: "#201244", clientName: "Anjali Mehta",    deliveryPartnerName: "Ravi Kumar",     dateTime: "2026-03-03T08:20:00Z", amount: 195, status: "failed"     },
+  { id: "8",  trackingId: "#201245", clientName: "Sanjay Gupta",    deliveryPartnerName: "Kiran Nair",     dateTime: "2026-03-03T14:10:00Z", amount: 560, status: "processing" },
+  { id: "9",  trackingId: "#201246", clientName: "Deepak Verma",    deliveryPartnerName: "Anjali Mehta",   dateTime: "2026-03-04T09:50:00Z", amount: 390, status: "success"    },
+  { id: "10", trackingId: "#201247", clientName: "Meena Joshi",     deliveryPartnerName: "Deepak Verma",   dateTime: "2026-03-04T11:25:00Z", amount: 220, status: "pending"    },
+  { id: "11", trackingId: "#201248", clientName: "Rohit Desai",     deliveryPartnerName: "Ajay Singh",     dateTime: "2026-03-05T10:00:00Z", amount: 480, status: "success"    },
+  { id: "12", trackingId: "#201249", clientName: "Sunita More",     deliveryPartnerName: "Neha Patil",     dateTime: "2026-03-05T15:40:00Z", amount: 310, status: "failed"     },
 ];

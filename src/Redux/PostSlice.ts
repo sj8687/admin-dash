@@ -1,4 +1,4 @@
-import { PartnerDocs, PartnerListItem } from "@/Types/types";
+import { PartnerDocs, PartnerListItem, VerifyDocsPayload } from "@/Types/types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 
@@ -27,6 +27,9 @@ interface OrdersState {
   partnerDocsLoading: boolean;
   partnerDocsError: string | null;
 
+  verifyLoading: boolean;
+  verifyError: string | null;
+
   error: string | null;
 }
 
@@ -51,6 +54,9 @@ const initialState: OrdersState = {
   partnerDocs: null,
   partnerDocsLoading: false,
   partnerDocsError: null,
+
+  verifyLoading: false,
+  verifyError: null,
 
   error: null,
 };
@@ -105,7 +111,7 @@ const postSlice = createSlice({
     },
 
 
-    
+
     getPartnerDocsRequest(state, action: PayloadAction<string>) {
       state.partnerDocsLoading = true;
       state.partnerDocsError = null;
@@ -119,7 +125,28 @@ const postSlice = createSlice({
       state.partnerDocsError = action.payload;
     },
 
+
+    verifyPartnerDocsRequest(
+      state,
+      action: PayloadAction<{ partnerId: string; payload: VerifyDocsPayload }>
+    ) {
+      state.verifyLoading = true;
+      state.verifyError = null;
+    },
+
+    verifyPartnerDocsSuccess(state) {
+      state.verifyLoading = false;
+    },
+
+    verifyPartnerDocsFailure(state, action: PayloadAction<string>) {
+      state.verifyLoading = false;
+      state.verifyError = action.payload;
+    },
+
+    
   },
+
+
 });
 
 export const {
@@ -137,7 +164,11 @@ export const {
 
   getPartnerDocsRequest,
   getPartnerDocsSuccess,
-  getPartnerDocsFailure
+  getPartnerDocsFailure,
+
+    verifyPartnerDocsRequest,
+  verifyPartnerDocsSuccess,
+  verifyPartnerDocsFailure,
 } = postSlice.actions;
 
 export default postSlice.reducer;

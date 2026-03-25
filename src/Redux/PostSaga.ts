@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { fetchPartnerDocs, getPartnersAPI, loginAPI, logoutAPI, } from "./Api";
+import { fetchPartnerDocs, getPartnersAPI, loginAPI, logoutAPI, verifyPartnerDocsAPI, } from "./Api";
 import {
   loginRequest,
   loginSuccess,
@@ -13,6 +13,9 @@ import {
   getPartnerDocsSuccess,
   getPartnerDocsFailure,
   getPartnerDocsRequest,
+  verifyPartnerDocsSuccess,
+  verifyPartnerDocsFailure,
+  verifyPartnerDocsRequest,
 
 } from "./PostSlice";
 import type { SagaIterator } from "redux-saga";
@@ -76,11 +79,26 @@ function* handleGetPartnerDocs(action: any): any {
 }
 
 
+function* handleVerifyPartnerDocs(action: any): any {
+  try {
+    const { partnerId, payload } = action.payload;
+
+    yield call(verifyPartnerDocsAPI, partnerId, payload);
+
+    yield put(verifyPartnerDocsSuccess());
+  } catch (error: any) {
+    yield put(verifyPartnerDocsFailure(error.message));
+  }
+}
+
+
 export default function* postSaga(): SagaIterator {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(logoutRequest.type, handleLogout);
   yield takeLatest(getPartnersRequest.type, handleGetPartners);
   yield takeLatest(getPartnerDocsRequest.type, handleGetPartnerDocs);
+  yield takeLatest(verifyPartnerDocsRequest.type, handleVerifyPartnerDocs);
+
 }
 
 

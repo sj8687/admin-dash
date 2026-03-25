@@ -23,7 +23,7 @@ const UsersPage: React.FC = () => {
         title="Users"
         subtitle={`${users.length} total users`}
         actions={
-          <button className="flex items-center gap-1.5 text-sm text-white bg-gray-900 rounded-lg px-4 py-2 hover:bg-gray-700">
+          <button className="flex items-center font-medium gap-1.5 text-sm text-white bg-gray-900 rounded-lg px-4 py-2 hover:bg-gray-700">
             <RiAddLine size={15} /> Add User
           </button>
         }
@@ -31,13 +31,13 @@ const UsersPage: React.FC = () => {
 
       {/* Search & filter */}
       <div className="flex flex-col sm:flex-row gap-3 mb-5">
-        <div className="flex items-center gap-2 dark:bg-black border border-[var(--border)] rounded-xl px-4 py-2.5 flex-1 max-w-sm">
+        <div className="flex items-center gap-2 dark:bg-black border border-[var(--border)] rounded-xl px-2 py-2 flex-1 max-w-2xs">
           <RiSearchLine size={14} className="text-[var(--text-muted)]" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search users..."
-            className="bg-transparent text-sm outline-none placeholder-[var(--text-muted)] w-full"
+            className="bg-transparent text-sm outline-none placeholder-[var(--text-muted)]"
           />
         </div>
         <select className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-xl px-4 py-2.5 text-sm text-[var(--text-secondary)] outline-none">

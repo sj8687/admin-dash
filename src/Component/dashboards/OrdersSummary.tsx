@@ -67,7 +67,7 @@ const RecentProjectsTable: React.FC = () => {
   const ColHead: React.FC<{ label: string; field?: keyof RecentProject }> = ({ label, field }) => (
     <th
       onClick={() => field && toggleSort(field)}
-      className="px-4 py-3 text-xs font-bold uppercase cursor-pointer text-gray-600 dark:text-gray-400"
+      className="px-4 py-3 text-xs font-bold uppercase cursor-pointer text-gray-100 dark:text-gray-100"
     >
       <span className="flex items-center gap-1">
         {label}
@@ -82,7 +82,7 @@ const RecentProjectsTable: React.FC = () => {
       dark:bg-[#09090b] dark:border-[#27272b]"
     >
       {/* Header */}
-      <div className="flex p-5 justify-between items-center p-4 border-b 
+      <div className="flex p-5 justify-between  items-center p-4 border-b 
         border-gray-200 dark:border-[#0f0f11]"
       >
         <h3 className="font-medium text-gray-800 dark:text-gray-200">
@@ -98,123 +98,123 @@ const RecentProjectsTable: React.FC = () => {
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search by Order ID or Name"
+            placeholder="Search by Order ID Name"
             className="bg-transparent p-0.5 px-6 outline-none text-sm 
               text-gray-800 placeholder-gray-500
               dark:text-gray-200 dark:placeholder-gray-500"
           />
         </div>
       </div>
-<div className="p-4 ">
-      {/* Table */}
-      <table className="w-full ">
-        <thead className=" text-sm font-bold uppercase cursor-pointer text-gray-600 dark:text-gray-400">
-          <tr >
-            <ColHead label="Order ID" field="orderId" />
-            <ColHead label="Client Name" field="clientName" />
-            <ColHead label="Delivery Partner" field="deliveryPartner" />
-            <ColHead label="Start Date" field="startDate" />
-            <ColHead label="Deadline" field="deadline" />
-            <th className="text-gray-600 !text-xs dark:text-gray-400">Transaction</th>
-            <th></th>
-          </tr>
-        </thead>
-
-        <tbody className="text-sm font-medium">
-          {paginated.length === 0 ? (
-            <tr>
-              <td colSpan={7} className="text-center p-6 text-gray-500">
-                No results found
-              </td>
+      <div className="p-4 ">
+        {/* Table */}
+        <table className="w-full ">
+          <thead className=" text-sm bg-[#52B788] s font-bold uppercase cursor-pointer ">
+            <tr >
+              <ColHead label="Order ID" field="orderId" />
+              <ColHead label="Client Name" field="clientName" />
+              <ColHead label="Delivery Partner" field="deliveryPartner" />
+              <ColHead label="Start Date" field="startDate" />
+              <ColHead label="Deadline" field="deadline" />
+              <th className="text-gray-100 !text-xs dark:text-gray-100">Transaction</th>
+              <th></th>
             </tr>
-          ) : (
-            paginated.map((project) => (
-              <tr
-                key={project.id}
-                className="border-t border-gray-200 dark:border-[#0f0f11] 
-                  hover:bg-gray-50 dark:hover:bg-[#111113]"
-              >
-                <td className="p-3 text-gray-800 dark:text-gray-200">
-                  {project.orderId}
-                </td>
-                <td className="p-3 text-gray-800 dark:text-gray-200">
-                  {project.clientName}
-                </td>
-                <td className="p-3 text-gray-800 dark:text-gray-200">
-                  {project.deliveryPartner}
-                </td>
-                <td className="p-3 text-gray-600 dark:text-gray-400">
-                  {project.startDate}
-                </td>
-                <td className="p-3 text-gray-600 dark:text-gray-400">
-                  {project.deadline}
-                </td>
+          </thead>
 
-                <td className="p-3 text-center">
-                  {project.transactionOk ? (
-                    <RiCheckLine className="text-green-500 mx-auto" />
-                  ) : (
-                    <RiCloseLine className="text-red-500 mx-auto" />
-                  )}
+          <tbody className="text-sm font-medium">
+            {paginated.length === 0 ? (
+              <tr>
+                <td colSpan={7} className="text-center p-6 text-gray-500">
+                  No results found
                 </td>
+              </tr>
+            ) : (
+              paginated.map((project) => (
+                <tr
+                  key={project.id}
+                  className="border-t border-gray-200 dark:border-[#0f0f11] 
+                  hover:bg-green-100 dark:hover:bg-[#111113]"
+                >
+                  <td className="p-3 text-gray-800 dark:text-gray-200">
+                    {project.orderId}
+                  </td>
+                  <td className="p-3 text-gray-800 dark:text-gray-200">
+                    {project.clientName}
+                  </td>
+                  <td className="p-3 text-gray-800 dark:text-gray-200">
+                    {project.deliveryPartner}
+                  </td>
+                  <td className="p-3 text-gray-600 dark:text-gray-400">
+                    {project.startDate}
+                  </td>
+                  <td className="p-3 text-gray-600 dark:text-gray-400">
+                    {project.deadline}
+                  </td>
 
-                {/* Dropdown */}
-                <td className="p-3 relative">
-                  <button
-                    onClick={(e) => {
-                      const rect = e.currentTarget.getBoundingClientRect();
-                      const spaceBelow = window.innerHeight - rect.bottom;
+                  <td className="p-3 text-center">
+                    {project.transactionOk ? (
+                      <RiCheckLine className="text-green-500 mx-auto" />
+                    ) : (
+                      <RiCloseLine className="text-red-500 mx-auto" />
+                    )}
+                  </td>
 
-                      if (openMenu === project.id) {
-                        setOpenMenu(null);
-                      } else {
-                        setOpenMenu(project.id);
-                        setMenuPosition(spaceBelow < 120 ? "top" : "bottom");
-                      }
-                    }}
-                    className="p-1 rounded dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#1a1a1d]"
-                  >
-                    <RiMoreLine />
-                  </button>
+                  {/* Dropdown */}
+                  <td className="p-3 relative">
+                    <button
+                      onClick={(e) => {
+                        const rect = e.currentTarget.getBoundingClientRect();
+                        const spaceBelow = window.innerHeight - rect.bottom;
 
-                  {openMenu === project.id && (
-                    <>
-                      <div
-                        className="fixed inset-0 z-10"
-                        onClick={() => setOpenMenu(null)}
-                      />
+                        if (openMenu === project.id) {
+                          setOpenMenu(null);
+                        } else {
+                          setOpenMenu(project.id);
+                          setMenuPosition(spaceBelow < 120 ? "top" : "bottom");
+                        }
+                      }}
+                      className="p-1 rounded dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-[#1a1a1d]"
+                    >
+                      <RiMoreLine />
+                    </button>
 
-                      <div
-                        className={`absolute right-0 w-32 rounded-lg shadow-md z-20
+                    {openMenu === project.id && (
+                      <>
+                        <div
+                          className="fixed inset-0 z-10"
+                          onClick={() => setOpenMenu(null)}
+                        />
+
+                        <div
+                          className={`absolute right-0 w-32 rounded-lg shadow-md z-20
                           bg-white border border-gray-200
                           dark:bg-[#19191d] dark:border-[#29292e]
                           ${menuPosition === "bottom" ? "mt-2 top-full" : "mb-2 bottom-full"}
                         `}
-                      >
-                        {["View", "Edit", "Delete"].map((action) => (
-                          <button
-                            key={action}
-                            onClick={() => setOpenMenu(null)}
-                            className={`block w-full text-left px-4 py-2 text-sm 
+                        >
+                          {["View", "Edit", "Delete"].map((action) => (
+                            <button
+                              key={action}
+                              onClick={() => setOpenMenu(null)}
+                              className={`block w-full text-left px-4 py-2 text-sm 
                               hover:bg-gray-100 dark:hover:bg-[#232326]
                               ${action === "Delete"
-                                ? "text-red-500"
-                                : "text-gray-700 dark:text-gray-300"
-                              }`}
-                          >
-                            {action}
-                          </button>
-                        ))}
-                      </div>
-                    </>
-                  )}
-                </td>
-              </tr>
-            ))
-          )}
-        </tbody>
-      </table>
-</div>
+                                  ? "text-red-500"
+                                  : "text-gray-700 dark:text-gray-300"
+                                }`}
+                            >
+                              {action}
+                            </button>
+                          ))}
+                        </div>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))
+            )}
+          </tbody>
+        </table>
+      </div>
       {/* Pagination */}
       <div className="flex justify-between items-center p-4 border-t 
         border-gray-200 dark:border-[#0f0f11]"

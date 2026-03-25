@@ -193,8 +193,33 @@ export interface RecentProject {
   transactionOk: boolean;
 }
 
+export type TransactionStatus = "pending" | "failed" | "processing" | "success";
+
+export interface Transaction {
+  id: string;
+  trackingId: string;
+  clientName: string;
+  deliveryPartnerName: string;
+  dateTime: string;
+  amount: number;
+  status: TransactionStatus;
+}
 
 
+
+
+
+
+
+//nav items
+export interface NavItemRowProps {
+  id: string;
+  label: string;
+  iconKey: string;
+  path: string;
+  collapsed: boolean;
+  children?: Array<{ id: string; label: string; iconKey: string; path: string }>;
+}
 
 
 // list data of partner
@@ -228,3 +253,34 @@ export interface PartnerDocs {
 }
 
 
+//partner docs api
+export interface VerifiedDocuments {
+  id: string;
+  aadhaar: "verified" | "pending";
+  panCard: "verified" | "pending";
+  licence: "verified" | "pending";
+  bank: "verified" | "pending";
+  vehicleDocument: "verified" | "pending";
+  partnerId: string;
+}
+
+export interface PartnerDocs {
+  profilePhotoUrl?: string;
+  aadhaarImageUrl?: string;
+  aadhaarPdfUrl?: string;
+  panCardUrl?: string;
+  vehiclePhoto?: string;
+  vehicleDocument?: string;
+
+  verifiedDocuments?: VerifiedDocuments;
+}
+
+
+// docs
+export type VerifyDocsPayload = {
+  aadhaar: "verified" | "pending" | "rejected";
+  panCard: "verified" | "pending" | "rejected";
+  licence: "verified" | "pending" | "rejected";
+  bank: "verified" | "pending" | "rejected";
+  vehicleDocument: "verified" | "pending" | "rejected";
+};

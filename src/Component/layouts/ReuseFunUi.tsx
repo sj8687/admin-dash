@@ -1,10 +1,10 @@
-import { PartnerListItem } from "@/Types/types";
+import { PartnerListItem, TransactionStatus } from "@/Types/types";
 import {
    ChevronUp, ChevronDown, ArrowUpDown,
 } from "lucide-react";
 
 
-
+//for verify partner
 export function StatusBadge({ status }: { status: PartnerListItem["status"] }) {
   const map: Record<PartnerListItem["status"], string> = {
     approved: "bg-green-100  text-green-700  border border-green-300  dark:bg-green-900/40  dark:text-green-400  dark:border-green-800",
@@ -18,6 +18,7 @@ export function StatusBadge({ status }: { status: PartnerListItem["status"] }) {
   );
 }
 
+//for verify partner
 export function ActiveBadge({ active }: { active: boolean }) {
   return (
     <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-[12px] font-medium border ${
@@ -31,7 +32,7 @@ export function ActiveBadge({ active }: { active: boolean }) {
   );
 }
 
-
+//for verify partner
 type SortKey = "full_name" | "is_active" | "created_at" | "mobile_number" | "status";
 type SortDir = "asc" | "desc";
 
@@ -41,4 +42,24 @@ export function SortBtn({ col, sortKey, sortDir }: { col: SortKey; sortKey: Sort
   return sortDir === "asc"
     ? <ChevronUp   size={12} className="text-green-500 ml-1 inline shrink-0" />
     : <ChevronDown size={12} className="text-green-500 ml-1 inline shrink-0" />;
+}
+
+
+
+//for transaction section
+export function StatusBadgee({ status }: { status: TransactionStatus }) {
+  const cfg: Record<TransactionStatus, string> = {
+    pending:    "bg-yellow-100 text-yellow-700 border-yellow-300 dark:bg-yellow-900/30 dark:text-yellow-400 dark:border-yellow-800",
+    failed:     "bg-red-100    text-red-700    border-red-300    dark:bg-red-900/30    dark:text-red-400    dark:border-red-800",
+    processing: "bg-blue-100   text-blue-700   border-blue-300   dark:bg-blue-900/30   dark:text-blue-400   dark:border-blue-800",
+    success:    "bg-green-100  text-green-700  border-green-300  dark:bg-green-900/30  dark:text-green-400  dark:border-green-800",
+  };
+  const label: Record<TransactionStatus, string> = {
+    pending: "Pending", failed: "Failed", processing: "Processing", success: "Success",
+  };
+  return (
+    <span className={`inline-flex items-center px-2.5 py-1 rounded-lg text-xs font-semibold border ${cfg[status]}`}>
+      {label[status]}
+    </span>
+  );
 }

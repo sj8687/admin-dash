@@ -8,8 +8,11 @@ import {
   RiMenuFoldLine, RiMenuUnfoldLine, RiArrowDownSLine,
   RiListCheck, RiFileList3Line, RiAddCircleLine, RiLoginBoxLine, RiUserAddLine,
 } from "react-icons/ri";
+import { TbTransactionRupee } from "react-icons/tb";
+
 import { navGroups } from "../../Data/mockdata";
 import { useSidebar } from "../layouts/SidebarContext";
+import { NavItemRowProps } from "@/Types/types";
 
 
 /* ── icon registry ─────────────────────────────────────────── */
@@ -19,20 +22,12 @@ const iconMap: Record<string, React.ElementType> = {
   RiLayoutLine, RiTodoLine, RiStickyNoteLine, RiCalendarLine,
   RiKeyLine, RiUserLine, RiGroupLine, RiSettingsLine,
   RiShoppingCartLine, RiBox3Line, RiShieldLine, RiListCheck,
-  RiFileList3Line, RiAddCircleLine, RiLoginBoxLine, RiUserAddLine,
+  RiFileList3Line, RiAddCircleLine, RiLoginBoxLine, RiUserAddLine,TbTransactionRupee
 };
 
 
 
-/* ── NavItem row ───────────────────────────────────────────── */
-interface NavItemRowProps {
-  id: string;
-  label: string;
-  iconKey: string;
-  path: string;
-  collapsed: boolean;
-  children?: Array<{ id: string; label: string; iconKey: string; path: string }>;
-}
+
 
 const NavItemRow: React.FC<NavItemRowProps> = ({ id, label, iconKey, path, collapsed, children }) => {
   const location = useLocation();
