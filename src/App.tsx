@@ -10,6 +10,7 @@ import AnalyticsPage from "./Pages/AnalyticsPage";
 import UsersPage from "./Pages/UsersPage";
 import PartnerListTable from "./Pages/PartnerVerifylist";
 import TransactionTable from "./Pages/TransactionPage";
+import DeliveryPartnerPage from "./Pages/DriverListPage";
 // import DashboardLayout from "./DashboardLayout";
 // import AnalyticsPage from "./components/ui/Analytics";
 // import PlaceholderPage from "./components/ui/placeholderpage";
@@ -69,6 +70,8 @@ const App: React.FC = () => {
           <Route path="/products/add" element={<PlaceholderPage />} /> */}
           <Route path="/auth/verifypartner" element={<PartnerListTable />} />
           <Route path="/auth/transaction" element={<TransactionTable />} /> 
+          <Route path="/auth/partner" element={<DeliveryPartnerPage />} /> 
+
 
           {/* Catch-all */}
           {/* <Route path="*" element={<PlaceholderPage />} /> */}

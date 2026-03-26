@@ -10,23 +10,14 @@ import { RootState } from "@/Redux/Store";
 import DocModal from "../Component/layouts/PartnerDocModal";
 
 
-
 type SortKey = "full_name" | "is_active" | "created_at" | "mobile_number" | "status";
 type SortDir = "asc" | "desc";
 
-// ─── Constants ────────────────────────────────────────────────────────────────
 const PAGE_SIZE = 7;
 
 function formatDate(iso: string) {
   return new Date(iso).toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
 }
-
-// ─── Props ────────────────────────────────────────────────────────────────────
-// interface PartnerListTableProps {
-//   /** Called when admin clicks "View Docs" — wire your DocModal here later */
-//   onViewDocs?: (partner: PartnerListItem) => void;
-// }
-// { onViewDocs }: PartnerListTableProps
 
 export default function PartnerListTable() {
   const [search, setSearch] = useState<string>("");
@@ -201,22 +192,22 @@ export default function PartnerListTable() {
         <div className="overflow-x-auto ">
           <table className="w-full border-collapse">
             <thead>
-              <tr className="bg-gray-50 dark:bg-[#18181b] border-b  border-gray-200 dark:border-[#1f1f1f]">
+              <tr className="bg-gray-50 dark:bg-[#18181b] text-white border-b  border-gray-200 dark:border-[#1f1f1f]">
                 {/* # — no sort */}
-                <th className={`${thBase} text-gray-500 dark:text-zinc-400 w-12`}>#</th>
+                <th className={`${thBase} text-gray-100 dark:text-zinc-400 w-12`}>#</th>
 
                 {([
-                  ["", "Partner", false],
-                  ["is_active", "Active Status", true],
-                  ["created_at", "Joined Date", true],
-                  ["mobile_number", "Phone", true],
+                  ["", "Partner", ],
+                  ["is_active", "Active Status", ],
+                  ["created_at", "Joined Date", ],
+                  ["mobile_number", "Phone", ],
                   ["", "Document's", false],
-                  ["status", "Verify Status", true],
+                  ["status", "Verify Status", ],
                 ] as [SortKey | "", string, boolean][]).map(([col, label, sortable], i) => (
                   <th
                     key={i}
                     className={`${thBase} text-white dark:text-zinc-100
-                                ${sortable ? " dark:hover:text-zinc-400 cursor-pointer" : ""}
+                                ${sortable ? " dark:hover:text-zinc-400 text-white cursor-pointer" : ""}
                                 ${i === 4 ? "text-center" : ""}
                                 ${i === 0 ? "min-w-[170px]" : ""}`}
                     onClick={() => sortable && handleSort(col as SortKey)}

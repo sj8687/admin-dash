@@ -6,9 +6,10 @@ import {
   RiTodoLine, RiStickyNoteLine, RiCalendarLine, RiKeyLine, RiUserLine,
   RiGroupLine, RiSettingsLine, RiShoppingCartLine, RiBox3Line, RiShieldLine,
   RiMenuFoldLine, RiMenuUnfoldLine, RiArrowDownSLine,
-  RiListCheck, RiFileList3Line, RiAddCircleLine, RiLoginBoxLine, RiUserAddLine,
+  RiListCheck, RiFileList3Line, RiAddCircleLine, RiLoginBoxLine, RiUserAddLine,RiEBike2Fill
 } from "react-icons/ri";
 import { TbTransactionRupee } from "react-icons/tb";
+
 
 import { navGroups } from "../../Data/mockdata";
 import { useSidebar } from "../layouts/SidebarContext";
@@ -22,7 +23,7 @@ const iconMap: Record<string, React.ElementType> = {
   RiLayoutLine, RiTodoLine, RiStickyNoteLine, RiCalendarLine,
   RiKeyLine, RiUserLine, RiGroupLine, RiSettingsLine,
   RiShoppingCartLine, RiBox3Line, RiShieldLine, RiListCheck,
-  RiFileList3Line, RiAddCircleLine, RiLoginBoxLine, RiUserAddLine,TbTransactionRupee
+  RiFileList3Line, RiAddCircleLine, RiLoginBoxLine, RiUserAddLine,TbTransactionRupee,RiEBike2Fill
 };
 
 

@@ -32,7 +32,7 @@ export async function logoutAPI() {
 
 export async function getPartnersAPI() {
   const res = await axios.get(
-    "https://cassette-tent-smith-warnings.trycloudflare.com/api/v1/super-admin/partners",
+    "https://elliott-hewlett-picks-dave.trycloudflare.com/api/v1/super-admin/partners",
     {
       headers: {
         "X-Super-Admin-API-Key": "123",
@@ -52,7 +52,7 @@ interface ApiResponse<T> {
 
 export const fetchPartnerDocs = async (partnerId: string): Promise<PartnerDocs> => {
   const res = await axios.post<ApiResponse<PartnerDocs>>(
-    "https://cassette-tent-smith-warnings.trycloudflare.com/api/v1/super-admin/partner/documents",
+    "https://elliott-hewlett-picks-dave.trycloudflare.com/api/v1/super-admin/partner/documents",
     { partner_id: partnerId },
     {
       headers: {
@@ -74,7 +74,7 @@ export const verifyPartnerDocsAPI = async (
   payload: VerifyDocsPayload
 ) => {
   const res = await axios.patch(
-    "https://cassette-tent-smith-warnings.trycloudflare.com/api/v1/super-admin/partner/documents/status",
+    "https://elliott-hewlett-picks-dave.trycloudflare.com/api/v1/super-admin/partner/documents/status",
     {
       partner_id: partnerId,
       ...payload,

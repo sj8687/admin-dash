@@ -5,7 +5,7 @@ import StatCardComponent from "../Component/dashboards/StatCard";
 import ProjectsChart from "../Component/dashboards/ProjectsChart";
 import ProfessionalsCard from "../Component/dashboards/ProfessionalsCard";
 import RecentProjectsTable from "@/Component/dashboards/OrdersSummary";
-import DeliveryPartnerPage from "./KanbanPage";
+import DeliveryPartnerPage from "./DriverListPage";
 
 
 

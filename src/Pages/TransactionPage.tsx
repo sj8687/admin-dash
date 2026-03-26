@@ -90,7 +90,7 @@ const handleExport = () => {
                     className="inline-flex items-center gap-2 px-4 py-2 rounded-[9px] text-[13px] font-medium
                      border transition-all duration-150 hover:scale-105 active:scale-95
                      bg-white border-gray-300 text-gray-700 hover:bg-gray-50
-                     dark:bg-[#181818] dark:border-[#2a2a2a] dark:text-zinc-300 dark:hover:bg-[#222]"
+                     dark:bg-[#181818] dark:border-[#9b9090] dark:text-zinc-300 dark:hover:bg-[#222]"
                 >
                     <Download size={14} />
                     Export
@@ -107,7 +107,7 @@ const handleExport = () => {
                         className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-[9px] text-[13px] font-medium border
                        transition-colors
                        bg-white border-gray-200 text-gray-700 hover:bg-gray-50
-                       dark:bg-[#181818] dark:border-[#2a2a2a] dark:text-zinc-300 dark:hover:bg-[#222]"
+                       dark:bg-[#181818] dark:border-[#867b7b] dark:text-zinc-300 dark:hover:bg-[#222]"
                     >
                         Status
                         <ChevronDown size={13} className={`transition-transform duration-200 ${statusOpen ? "rotate-180" : ""}`} />
@@ -143,7 +143,7 @@ const handleExport = () => {
                         onChange={(e) => { setSearch(e.target.value); setPage(1); }}
                         className="w-full pl-8 pr-4  py-2.5  rounded-[9px] text-xs outline-none
                        bg-white border border-gray-300 text-gray-800 placeholder-gray-400 focus:ring-1 focus:ring-gray-300
-                       dark:bg-[#181818] dark:border-[#2a2a2a] dark:text-zinc-300 dark:placeholder-zinc-600 dark:focus:ring-zinc-700"
+                       dark:bg-[#181818] dark:border-[#a19393] dark:text-zinc-300 dark:placeholder-zinc-600 dark:focus:ring-zinc-700"
                     />
                 </div>
             </div>

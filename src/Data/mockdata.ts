@@ -53,8 +53,10 @@ export const navGroups: NavGroup[] = [
         {
         id: "auth", label: "Management", icon: "RiShieldLine", path: "/auth",
         children: [
-          { id: "partner-verify", label: "Partner-List", icon: "FaAddressCard", path: "/auth/verifypartner" },
+          { id: "partner-verify", label: "Partner-Verify-List", icon: "FaAddressCard", path: "/auth/verifypartner" },
           { id: "transaction-history", label: "Transaction-History", icon: "TbTransactionRupee", path: "/auth/transaction" },
+          { id: "delivery-partner ", label: "Delivery-Partner", icon: "RiEBike2Fill", path: "/auth/partner" },
+
         ],
       },
 
