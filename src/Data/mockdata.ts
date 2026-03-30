@@ -18,6 +18,8 @@ import type {
   NavGroup,
   RecentProject,
   Transaction,
+  Driver,
+  AppUser,
 } from "../Types/types";
 
 // ── Navigation ───────────────────────────────────────────────
@@ -386,4 +388,45 @@ export const DUMMY_TRANSACTIONS: Transaction[] = [
   { id: "10", trackingId: "#201247", clientName: "Meena Joshi",     deliveryPartnerName: "Deepak Verma",   dateTime: "2026-03-04T11:25:00Z", amount: 220, status: "pending"    },
   { id: "11", trackingId: "#201248", clientName: "Rohit Desai",     deliveryPartnerName: "Ajay Singh",     dateTime: "2026-03-05T10:00:00Z", amount: 480, status: "success"    },
   { id: "12", trackingId: "#201249", clientName: "Sunita More",     deliveryPartnerName: "Neha Patil",     dateTime: "2026-03-05T15:40:00Z", amount: 310, status: "failed"     },
+];
+
+
+
+
+
+
+// ─── Dummy Data ───────────────────────────────────────────────────────────────
+
+export const DRIVERS: Driver[] = [
+  { id: "1",  name: "Suresh Kumar",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Suresh",  status: "On Route",  driverId: "DRV-001", phone: "+91 23456 78923", vehicle: "Tata Ace - MH 01 SB 3645", rating: 4.8, trips: 1240, earnings: "82K", location: "Andheri, Mumbai" },
+  { id: "2",  name: "Ravi Sharma",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Ravi",    status: "Completed", driverId: "DRV-002", phone: "+91 23456 78924", vehicle: "Tata Ace - MH 02 AB 1234", rating: 4.6, trips: 980,  earnings: "68K", location: "Bandra, Mumbai" },
+  { id: "3",  name: "Amit Patil",    photo: "https://api.dicebear.com/7.x/personas/svg?seed=Amit",    status: "Canceled",  driverId: "DRV-003", phone: "+91 23456 78925", vehicle: "Mahindra - MH 03 CD 5678", rating: 4.3, trips: 760,  earnings: "54K", location: "Dadar, Mumbai" },
+  { id: "4",  name: "Vijay Nair",    photo: "https://api.dicebear.com/7.x/personas/svg?seed=Vijay",   status: "Completed", driverId: "DRV-004", phone: "+91 23456 78926", vehicle: "Tata Ace - MH 04 EF 9012", rating: 4.9, trips: 1560, earnings: "95K", location: "Powai, Mumbai" },
+  { id: "5",  name: "Deepak Singh",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Deepak",  status: "Canceled",  driverId: "DRV-005", phone: "+91 23456 78927", vehicle: "Ashok Leyland - MH 05 GH", rating: 4.1, trips: 430,  earnings: "31K", location: "Kurla, Mumbai" },
+  { id: "6",  name: "Manoj Desai",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Manoj",   status: "Completed", driverId: "DRV-006", phone: "+91 23456 78928", vehicle: "Tata Ace - MH 06 IJ 3456", rating: 4.7, trips: 1120, earnings: "79K", location: "Thane, Mumbai" },
+  { id: "7",  name: "Rahul Verma",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Rahul",   status: "Completed", driverId: "DRV-007", phone: "+91 23456 78929", vehicle: "Maruti - MH 07 KL 7890",   rating: 4.5, trips: 890,  earnings: "62K", location: "Borivali, Mumbai" },
+  { id: "8",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
+  { id: "9",  name: "Kiran Rao",     photo: "https://api.dicebear.com/7.x/personas/svg?seed=Kiran",   status: "Completed", driverId: "DRV-009", phone: "+91 23456 78931", vehicle: "Mahindra - MH 09 OP 6789", rating: 4.8, trips: 1380, earnings: "88K", location: "Goregaon, Mumbai" },
+  { id: "10",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
+  { id: "11",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
+  { id: "12",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
+
+];
+
+
+
+
+export const DUMMY_USERS: AppUser[] = [
+  { id: "USR-001", name: "Shreyash Jadhav", email: "shreyash@example.com", phone: "+91 98765 43210", address: "Andheri, Mumbai, MH",   status: "Active",   joined: "2026-01-03T10:00:00Z" },
+  { id: "USR-002", name: "Ravi Kumar",      email: "ravi@example.com",     phone: "+91 87654 32109", address: "Bandra, Mumbai, MH",     status: "Active",   joined: "2026-01-03T10:30:00Z" },
+  { id: "USR-003", name: "Neha Patil",      email: "neha@example.com",     phone: "+91 76543 21098", address: "Dadar, Mumbai, MH", status: "Inactive", joined: "2026-01-03T11:45:00Z" },
+  { id: "USR-004", name: "Ajay Singh",      email: "ajay@example.com",     phone: "+91 65432 10987", address: "Powai, Mumbai, MH",       status: "Active",   joined: "2026-02-03T14:30:00Z" },
+  { id: "USR-005", name: "Priya Sharma",    email: "priya@example.com",    phone: "+91 54321 09876", address: "Kurla, Mumbai, MH",   status: "Active",   joined: "2026-02-03T16:15:00Z" },
+  { id: "USR-006", name: "Kiran Nair",      email: "kiran@example.com",    phone: "+91 43210 98765", address: "Thane, Mumbai, MH",     status: "Banned",   joined: "2026-02-03T19:00:00Z" },
+  { id: "USR-007", name: "Anjali Mehta",    email: "anjali@example.com",   phone: "+91 32109 87654", address: "Borivali, Mumbai, MH",    status: "Active",   joined: "2026-03-03T13:50:00Z" },
+  { id: "USR-008", name: "Sanjay Gupta",    email: "sanjay@example.com",   phone: "+91 21098 76543", address: "Malad, Mumbai, MH",  status: "Active",   joined: "2026-03-04T09:10:00Z" },
+  { id: "USR-009", name: "Deepak Verma",    email: "deepak@example.com",   phone: "+91 10987 65432", address: "Goregaon, Mumbai, MH",  status: "Inactive", joined: "2026-03-05T11:20:00Z" },
+  { id: "USR-010", name: "Meena Joshi",     email: "meena@example.com",    phone: "+91 09876 54321", address: "Vile Parle, Mumbai",  status: "Active",   joined: "2026-03-06T08:45:00Z" },
+  { id: "USR-011", name: "Vikram Rao",      email: "vikram@example.com",   phone: "+91 98760 43211", address: "Santacruz, Mumbai",    status: "Active",   joined: "2026-03-07T14:30:00Z" },
+  { id: "USR-012", name: "Sunita More",     email: "sunita@example.com",   phone: "+91 87651 32100", address: "Jogeshwari, Mumbai",   status: "Banned",   joined: "2026-03-08T16:00:00Z" },
 ];

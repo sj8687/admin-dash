@@ -1,3 +1,5 @@
+import { UserStatus } from "@/Pages/UsersPage";
+
 // ── Navigation ──────────────────────────────────────────────
 export interface NavItem {
   id: string;
@@ -204,6 +206,46 @@ export interface Transaction {
   amount: number;
   status: TransactionStatus;
 }
+
+
+export type DriverStatus = "On Route" | "Completed" | "Canceled";
+
+export interface Driver {
+  id: string;
+  name: string;
+  photo: string;
+  status: DriverStatus;
+  driverId: string;
+  phone: string;
+  vehicle: string;
+  rating: number;
+  trips: number;
+  earnings: string;
+  location: string;
+}
+
+export interface AppUser {
+  id: string;
+  name: string;
+  email: string;
+  phone: string;
+  address: string;
+  // role: UserRole;
+  status: UserStatus;
+  joined: string; // ISO date
+}
+
+
+export interface StatCardd { label: string; value: string; change: number; }
+export interface EarningRow { label: string; icon: string; amount: number; color: string; max: number; }
+export interface EarningRow { label: string; icon: string; amount: number; color: string; max: number; }
+export interface BarPoint { day: string; value: number; }
+export interface AreaPoint { month: string; value: number; target: number; }
+export interface LinePoint { x: number; y: number; }
+export interface CampaignRoww { label: string; value: string | number; change: number; icon: React.ReactNode; highlight?: boolean; }
+export interface TicketStatt { label: string; value: number; icon: React.ReactNode; color: string; }
+
+
 
 
 

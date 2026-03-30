@@ -76,7 +76,7 @@ const handleExport = () => {
     return (
         <div
             className="w-full space-y-4"
-            style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}
+            // style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}
             onClick={() => { setMenuOpen(null); setStatusOpen(false); }}
         >
             {/* ── Page header ── */}

@@ -1,41 +1,13 @@
 "use client";
 
-import { useState } from "react";
-import { Trash2, Pencil, MapPin, Star, Search, FileDown, Download } from "lucide-react";
+import { useState, useEffect } from "react";
+import { Trash2, Pencil, MapPin, Star, Search, FileDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download } from "lucide-react";
+import { Driver, DriverStatus } from "@/Types/types";
+import { DRIVERS } from "@/Data/mockdata";
 
-// ─── Types ────────────────────────────────────────────────────────────────────
 
-type DriverStatus = "On Route" | "Completed" | "Canceled";
 
-interface Driver {
-  id: string;
-  name: string;
-  photo: string;
-  status: DriverStatus;
-  driverId: string;
-  phone: string;
-  vehicle: string;
-  rating: number;
-  trips: number;
-  earnings: string;
-  location: string;
-}
 
-// ─── Dummy Data ───────────────────────────────────────────────────────────────
-
-const DRIVERS: Driver[] = [
-  { id: "1", name: "Suresh Kumar", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Suresh", status: "On Route", driverId: "DRV-001", phone: "+91 23456 78923", vehicle: "Tata Ace - MH 01 SB 3645", rating: 4.8, trips: 1240, earnings: "82K", location: "Andheri, Mumbai" },
-  { id: "2", name: "Ravi Sharma", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Ravi", status: "Completed", driverId: "DRV-002", phone: "+91 23456 78924", vehicle: "Tata Ace - MH 02 AB 1234", rating: 4.6, trips: 980, earnings: "68K", location: "Bandra, Mumbai" },
-  { id: "3", name: "Amit Patil", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Amit", status: "Canceled", driverId: "DRV-003", phone: "+91 23456 78925", vehicle: "Mahindra - MH 03 CD 5678", rating: 4.3, trips: 760, earnings: "54K", location: "Dadar, Mumbai" },
-  { id: "4", name: "Vijay Nair", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Vijay", status: "Completed", driverId: "DRV-004", phone: "+91 23456 78926", vehicle: "Tata Ace - MH 04 EF 9012", rating: 4.9, trips: 1560, earnings: "95K", location: "Powai, Mumbai" },
-  { id: "5", name: "Deepak Singh", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Deepak", status: "Canceled", driverId: "DRV-005", phone: "+91 23456 78927", vehicle: "Ashok Leyland - MH 05 GH", rating: 4.1, trips: 430, earnings: "31K", location: "Kurla, Mumbai" },
-  { id: "6", name: "Manoj Desai", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Manoj", status: "Completed", driverId: "DRV-006", phone: "+91 23456 78928", vehicle: "Tata Ace - MH 06 IJ 3456", rating: 4.7, trips: 1120, earnings: "79K", location: "Thane, Mumbai" },
-  { id: "7", name: "Rahul Verma", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Rahul", status: "Completed", driverId: "DRV-007", phone: "+91 23456 78929", vehicle: "Maruti - MH 07 KL 7890", rating: 4.5, trips: 890, earnings: "62K", location: "Borivali, Mumbai" },
-  { id: "8", name: "Sanjay Joshi", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay", status: "Canceled", driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320, earnings: "23K", location: "Malad, Mumbai" },
-  { id: "9", name: "Kiran Rao", photo: "https://api.dicebear.com/7.x/personas/svg?seed=Kiran", status: "Completed", driverId: "DRV-009", phone: "+91 23456 78931", vehicle: "Mahindra - MH 09 OP 6789", rating: 4.8, trips: 1380, earnings: "88K", location: "Goregaon, Mumbai" },
-];
-
-// ─── Status badge ─────────────────────────────────────────────────────────────
 
 function StatusBadge({ status }: { status: DriverStatus }) {
   const cfg: Record<DriverStatus, string> = {
@@ -53,10 +25,13 @@ function StatusBadge({ status }: { status: DriverStatus }) {
 // ─── Driver Card ──────────────────────────────────────────────────────────────
 
 function DriverCard({ driver, onDelete }: { driver: Driver; onDelete: (id: string) => void }) {
+
+  const [blocked, setBlocked] = useState(false);
+
   return (
-    <div className="relative rounded-2xl border p-4 flex flex-col gap-3
+    <div className="relative rounded-[10px] border p-4 flex flex-col gap-3
                     bg-white border-gray-200 shadow-sm
-                    dark:bg-[#141414] dark:border-[#242424]
+                    dark:bg-[#141414] dark:border-gray-600
                     hover:shadow-md transition-shadow duration-200">
 
       {/* Delete btn */}
@@ -119,11 +94,27 @@ function DriverCard({ driver, onDelete }: { driver: Driver; onDelete: (id: strin
           <MapPin size={12} className="text-red-400 shrink-0" />
           {driver.location}
         </div>
-        <button className="p-1.5 rounded-lg transition-colors
-                           text-gray-400 hover:text-gray-700 hover:bg-gray-100
-                           dark:text-zinc-600 dark:hover:text-zinc-300 dark:hover:bg-zinc-800">
-          <Pencil size={13} />
-        </button>
+
+        <div className="flex items-center gap-2">
+          <p className="text-[12px]">
+            {blocked ? "Blocked" : "Active"}
+          </p>
+
+          <button
+            onClick={() => setBlocked(!blocked)}
+            className={`w-10 h-5 flex items-center rounded-full p-0.5 border transition
+      ${blocked ? "bg-red-500 border-red-500" : "bg-gray-100 border-gray-400"}
+    `}
+          >
+            <div
+              className={`w-4 h-4 rounded-full bg-white shadow transform transition
+        ${blocked ? "translate-x-5" : "translate-x-0"}
+      `}
+            />
+          </button>
+        </div>
+
+
       </div>
     </div>
   );
@@ -142,7 +133,7 @@ function ShipmentChart() {
   const areaPath = `${linePath} L${w},${h} L0,${h} Z`;
 
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-20" preserveAspectRatio="none">
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-25" preserveAspectRatio="none">
       <defs>
         <linearGradient id="shipGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#84cc16" stopOpacity="0.35" />
@@ -212,16 +203,16 @@ function DriverSidebar() {
     <div className="flex flex-col gap-4 w-full">
 
       {/* Shipment Statistics */}
-      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-[#242424]">
+      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
         <div className="flex items-center justify-between mb-1">
-          <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100">Shipment Statistics</h3>
+          <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100">Driver Statistics</h3>
           <span className="text-[10px] text-gray-400 dark:text-zinc-600 border border-gray-200 dark:border-zinc-700 px-2 py-0.5 rounded-md">
             This Weekly
           </span>
         </div>
         <div className="mb-2">
           <span className="text-2xl font-bold text-gray-900 dark:text-zinc-100">980</span>
-          <span className="text-xs text-gray-400 dark:text-zinc-500 ml-2">Completed Deliveries</span>
+          <span className="text-xs text-gray-400 dark:text-zinc-500 ml-2">New Drivers</span>
         </div>
         <ShipmentChart />
         <div className="flex justify-between text-[9px] text-gray-400 dark:text-zinc-600 mt-1 px-1">
@@ -232,7 +223,7 @@ function DriverSidebar() {
       </div>
 
       {/* Performance Metrics */}
-      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-[#242424]">
+      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
         <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-3">Performance Metrics</h3>
         <p className="text-xs text-gray-500 dark:text-zinc-500 mb-2">On-Time Delivery Rate:</p>
         <div className="w-full h-3 rounded-full bg-gray-100 dark:bg-zinc-800 overflow-hidden mb-2">
@@ -245,7 +236,7 @@ function DriverSidebar() {
       </div>
 
       {/* Delay Reasons */}
-      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-[#242424]">
+      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
         <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-1">Delay Reasons Breakdown</h3>
         <p className="text-xs text-gray-400 dark:text-zinc-600 mb-3">Delay Cases</p>
         <DelayPieChart />
@@ -256,15 +247,40 @@ function DriverSidebar() {
 
 // ─── Main Page ────────────────────────────────────────────────────────────────
 
+// cols × rows per page:
+//  < 1280px  (up to ~14" laptops)  → 3 cols × 3 rows = 9
+//  ≥ 1280px  (15"+ / large screens) → 4 cols × 3 rows = 12
+function useColsPerPage() {
+  const getCols = () => {
+    if (typeof window === "undefined") return 3;
+
+    if (window.innerWidth >= 1024) return 3; // lg
+    if (window.innerWidth >= 640) return 2;  // sm
+    return 1; // mobile
+  };
+  const [cols, setCols] = useState<number>(getCols);
+
+  useEffect(() => {
+    const onResize = () => setCols(getCols());
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
+  return cols;
+}
+
 export default function DeliveryPartnerPage() {
   const [drivers, setDrivers] = useState<Driver[]>(DRIVERS);
   const [search, setSearch] = useState("");
+  const [page, setPage] = useState(1);
+
+  const cols = useColsPerPage();
+  const pageSize = cols * 3; // always 3 rows
 
   const handleDelete = (id: string) => {
     setDrivers((prev) => prev.filter((d) => d.id !== id));
   };
 
-  // Live search — filters by name, driverId, vehicle, location, phone
   const filtered = drivers.filter((d) => {
     const q = search.trim().toLowerCase();
     if (!q) return true;
@@ -277,74 +293,67 @@ export default function DeliveryPartnerPage() {
     );
   });
 
-  // Export to Excel (.xlsx-compatible CSV that Excel opens natively)
+  const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
+  const safePage = Math.min(page, totalPages);
+  const paged = filtered.slice((safePage - 1) * pageSize, safePage * pageSize);
+
+  const handleSearch = (val: string) => {
+    setSearch(val);
+    setPage(1);
+  };
+
   const handleExport = () => {
     const headers = ["#", "Driver ID", "Name", "Status", "Phone", "Vehicle", "Rating", "Trips", "Earnings", "Location"];
     const rows = drivers.map((d, i) => [
-      i + 1,
-      d.driverId,
-      d.name,
-      d.status,
-      d.phone,
-      d.vehicle,
-      d.rating,
-      d.trips,
-      `₹${d.earnings}`,
-      d.location,
+      i + 1, d.driverId, d.name, d.status, d.phone,
+      d.vehicle, d.rating, d.trips, `₹${d.earnings}`, d.location,
     ]);
-
-    // Build CSV with BOM so Excel shows ₹ correctly
     const bom = "\uFEFF";
     const csv = bom + [headers, ...rows]
       .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
       .join("\n");
-
     const blob = new Blob([csv], { type: "application/vnd.ms-excel;charset=utf-8" });
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
-    a.href = url;
-    a.download = "delivery_partners.xls";
-    a.click();
+    a.href = url; a.download = "delivery_partners.xls"; a.click();
     URL.revokeObjectURL(url);
   };
 
+  // Grid class: 3 cols default, 4 cols on xl (≥1280px)
+  const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4";
+
   return (
-    <div className="w-full" >
+    <div className="w-full" style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
 
       {/* ── Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
         <div>
-          <h1 className="text-xl font-semibold text-gray-900 dark:text-white">Delivery Partner</h1>
+          <h1 className="text-[22px] font-semibold text-gray-900 dark:text-white">Delivery Partner</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-0.5">List of all driver partners</p>
         </div>
 
-        {/* Search + Export */}
         <div className="flex items-center gap-2.5">
-          {/* Search bar */}
-          <div className="relative ">
+          <div className="relative w-60">
             <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-zinc-600 pointer-events-none" />
             <input
               type="text"
               placeholder="Search drivers…"
               value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              className="w-[300px] pl-8 pr-4 py-2.5 rounded-[9px] text-xs outline-none
-                         bg-white border border-gray-400 text-gray-800 placeholder-gray-400
-                         focus:ring-1 focus:ring-gray-300
-                         dark:bg-[#181818] dark:border-[#9b8b8b] dark:text-zinc-100
-                         dark:placeholder-zinc-600 dark:focus:ring-zinc-700"
+              onChange={(e) => handleSearch(e.target.value)}
+              className="w-full pl-8 pr-4 py-2 rounded-[9px] text-[13px] outline-none
+                         bg-white border border-gray-400 text-gray-800 placeholder-gray-400 focus:ring-1 focus:ring-gray-300
+                         dark:bg-[#181818] dark:border-gray-600 dark:text-zinc-300 dark:placeholder-zinc-600 dark:focus:ring-zinc-700"
             />
           </div>
-
-          {/* Export button */}
           <button
             onClick={handleExport}
-            className="inline-flex items-center gap-2 px-3.5 py-2.5 rounded-xl text-[13px] font-semibold
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[9px] text-[13px] font-semibold
                        border transition-all duration-150 hover:scale-105 active:scale-95 whitespace-nowrap
-                       bg-white border-gray-300 text-gray-700 hover:bg-gray-50
-                       dark:bg-[#181818] dark:border-[#9e8f8f] dark:text-zinc-300 dark:hover:bg-[#222]"
+                       bg-white border-gray-400 text-gray-700 hover:bg-gray-50
+                       dark:bg-[#181818] dark:border-gray-600 dark:text-zinc-300 dark:hover:bg-[#222]"
           >
-            <Download size={14} />  Export
+            <Download size={14} />
+            Export
           </button>
         </div>
       </div>
@@ -352,26 +361,52 @@ export default function DeliveryPartnerPage() {
       {/* ── Layout: cards + sidebar ── */}
       <div className="flex gap-5 items-start">
 
-        {/* Driver cards grid */}
-        <div className="flex-1 min-w-0">
-          {filtered.length === 0 ? (
-            <div className="flex items-center justify-center h-48 rounded-2xl border border-dashed
+        {/* Left: grid + pagination */}
+        <div className="flex-1 min-w-0 flex flex-col gap-4">
+
+          {paged.length === 0 ? (
+            <div className="flex items-center justify-center h-48 rounded-[10px] border border-dashed
                             border-gray-200 dark:border-zinc-800 text-gray-400 dark:text-zinc-600 text-sm">
               No drivers found{search ? ` for "${search}"` : ""}.
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
-              {filtered.map((driver) => (
+            <div className={gridClass}>
+              {paged.map((driver) => (
                 <DriverCard key={driver.id} driver={driver} onDelete={handleDelete} />
               ))}
             </div>
           )}
-          {/* Result count */}
-          {search && (
-            <p className="mt-3 text-xs text-gray-400 dark:text-zinc-600">
-              {filtered.length} result{filtered.length !== 1 ? "s" : ""} for &ldquo;{search}&rdquo;
-            </p>
-          )}
+
+          {/* ── Pagination ── */}
+          <div className="flex items-center justify-between pt-1">
+            <span className="text-xs text-gray-400 dark:text-zinc-600">
+              Page {safePage} of {totalPages}
+              <span className="ml-2 text-gray-300 dark:text-zinc-700">
+                · {filtered.length} driver{filtered.length !== 1 ? "s" : ""}
+              </span>
+            </span>
+
+            <div className="flex items-center gap-1.5">
+              {([
+                { icon: <ChevronsLeft size={13} />, action: () => setPage(1), disabled: safePage === 1 },
+                { icon: <ChevronLeft size={13} />, action: () => setPage((p) => Math.max(1, p - 1)), disabled: safePage === 1 },
+                { icon: <ChevronRight size={13} />, action: () => setPage((p) => Math.min(totalPages, p + 1)), disabled: safePage === totalPages },
+                { icon: <ChevronsRight size={13} />, action: () => setPage(totalPages), disabled: safePage === totalPages },
+              ] as { icon: React.ReactNode; action: () => void; disabled: boolean }[]).map((btn, i) => (
+                <button
+                  key={i}
+                  onClick={btn.action}
+                  disabled={btn.disabled}
+                  className="w-8 h-8 flex items-center justify-center rounded-lg transition-all cursor-pointer
+                             disabled:opacity-20 disabled:cursor-not-allowed
+                             border border-gray-200 text-gray-500 hover:enabled:bg-gray-100
+                             dark:border-[#2a2a2a] dark:text-zinc-600 dark:hover:enabled:bg-[#1e1e1e]"
+                >
+                  {btn.icon}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
 
         {/* Sidebar */}
