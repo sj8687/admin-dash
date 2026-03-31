@@ -20,6 +20,7 @@ import type {
   Transaction,
   Driver,
   AppUser,
+  Shipment,
 } from "../Types/types";
 
 // ── Navigation ───────────────────────────────────────────────
@@ -65,6 +66,7 @@ export const navGroups: NavGroup[] = [
 
       // { id: "profile", label: "Profile", icon: "RiUserLine", path: "/profile" },
       { id: "users", label: "Users", icon: "RiGroupLine", path: "/users" },
+
       {
         id: "orders", label: "Orders", icon: "RiShoppingCartLine", path: "/orders",
         children: [
@@ -298,6 +300,41 @@ export const AnalyticsStatsCards: StatCard[] = [
 
 ];
 
+
+export const ShipmentstatCards: StatCard[] = [
+  {
+    id: "Total",
+    title: "Total shipments",
+    value: "45,43",
+    change: "+20.1% from last month",
+    changeType: "positive",
+    icon: "FaTruckMoving",
+  },
+  {
+    id: "failed shipments",
+    title: "failed shipments",
+    value: "1,23",
+    change: "+5.02% from last month",
+    changeType: "negative",
+    icon: "FaBoxOpen",
+  },
+  {
+    id: "Cancel Deliveries",
+    title: "Cancel Shipmemts",
+    value: "3,423",
+    change: "-3.58% from last month",
+    changeType: "negative",
+    icon: "GiStorkDelivery",
+  },
+  {
+    id: "On-time Deliveries",
+    title: "On-time Deliveries",
+    value: "150",
+    change: "+10.35% from last month",
+    changeType: "positive",
+    icon: "MdOutlinePendingActions",
+  },
+];
 
 
 
@@ -593,4 +630,28 @@ export const DUMMY_USERS: AppUser[] = [
   { id: "USR-010", name: "Meena Joshi",     email: "meena@example.com",    phone: "+91 09876 54321", address: "Vile Parle, Mumbai",  status: "Active",   joined: "2026-03-06T08:45:00Z" },
   { id: "USR-011", name: "Vikram Rao",      email: "vikram@example.com",   phone: "+91 98760 43211", address: "Santacruz, Mumbai",    status: "Active",   joined: "2026-03-07T14:30:00Z" },
   { id: "USR-012", name: "Sunita More",     email: "sunita@example.com",   phone: "+91 87651 32100", address: "Jogeshwari, Mumbai",   status: "Banned",   joined: "2026-03-08T16:00:00Z" },
+];
+
+
+
+
+
+// ─── Dummy Data ───────────────────────────────────────────────────────────────
+
+export const DUMMY_SHIPMENTS: Shipment[] = [
+  { id: "1",  trackingId: "#201238", customerName: "Goodwill James",  customerEmail: "berlin@mail.com",  pickupLocation: "Kawasaki City, Cla...", pickupDate: "Feb 01, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 11, 2026", status: "Cancelled"  },
+  { id: "2",  trackingId: "#201239", customerName: "Priya Sharma",    customerEmail: "priya@mail.com",   pickupLocation: "Fukoria, Airport...",   pickupDate: "Mar 06, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 11, 2026", status: "On Time"    },
+  { id: "3",  trackingId: "#201240", customerName: "Ravi Kumar",      customerEmail: "ravi@mail.com",    pickupLocation: "Kawasaki City, Cla...", pickupDate: "Feb 01, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 11, 2026", status: "In Transit" },
+  { id: "4",  trackingId: "#201241", customerName: "Neha Patil",      customerEmail: "neha@mail.com",    pickupLocation: "Kawasaki City, Cla...", pickupDate: "Feb 01, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 11, 2026", status: "Delivered"  },
+  { id: "5",  trackingId: "#201242", customerName: "Ajay Singh",      customerEmail: "ajay@mail.com",    pickupLocation: "Kawasaki City, Cla...", pickupDate: "Feb 01, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 11, 2026", status: "Cancelled"  },
+  { id: "6",  trackingId: "#201243", customerName: "Kiran Nair",      customerEmail: "kiran@mail.com",   pickupLocation: "Fukoria, Airport...",   pickupDate: "Mar 06, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 11, 2026", status: "On Time"    },
+  { id: "7",  trackingId: "#201244", customerName: "Anjali Mehta",    customerEmail: "anjali@mail.com",  pickupLocation: "Kawasaki City, Cla...", pickupDate: "Feb 01, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 11, 2026", status: "Cancelled"  },
+  { id: "8",  trackingId: "#201245", customerName: "Sanjay Gupta",    customerEmail: "sanjay@mail.com",  pickupLocation: "Mumbai Port, Zone A",   pickupDate: "Mar 10, 2026", dropLocation: "Delhi Hub...",     dropDate: "Dec 15, 2026", status: "In Transit" },
+  { id: "9",  trackingId: "#201246", customerName: "Deepak Verma",    customerEmail: "deepak@mail.com",  pickupLocation: "Chennai Airport...",    pickupDate: "Mar 12, 2026", dropLocation: "Pune Station...",  dropDate: "Dec 18, 2026", status: "Delivered"  },
+  { id: "10", trackingId: "#201247", customerName: "Meena Joshi",     customerEmail: "meena@mail.com",   pickupLocation: "Hyderabad Hub...",      pickupDate: "Mar 14, 2026", dropLocation: "Bangalore...",     dropDate: "Dec 20, 2026", status: "Delayed"    },
+  { id: "11", trackingId: "#201248", customerName: "Vikram Rao",      customerEmail: "vikram@mail.com",  pickupLocation: "Kolkata Port...",       pickupDate: "Mar 16, 2026", dropLocation: "Ahmedabad...",     dropDate: "Dec 22, 2026", status: "On Time"    },
+  { id: "12", trackingId: "#201249", customerName: "Sunita More",     customerEmail: "sunita@mail.com",  pickupLocation: "Fukoria, Airport...",   pickupDate: "Mar 18, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 24, 2026", status: "Delivered"  },
+  { id: "13", trackingId: "#201250", customerName: "Rohit Desai",     customerEmail: "rohit@mail.com",   pickupLocation: "Kawasaki City, Cla...", pickupDate: "Mar 20, 2026", dropLocation: "Asaba Airport...", dropDate: "Dec 26, 2026", status: "Delayed"    },
+  { id: "14", trackingId: "#201251", customerName: "Pooja Iyer",      customerEmail: "pooja@mail.com",   pickupLocation: "Mumbai Port, Zone B",   pickupDate: "Mar 22, 2026", dropLocation: "Delhi Hub...",     dropDate: "Dec 28, 2026", status: "Cancelled"  },
+  { id: "15", trackingId: "#201252", customerName: "Arjun Kapoor",    customerEmail: "arjun@mail.com",   pickupLocation: "Chennai Airport...",    pickupDate: "Mar 24, 2026", dropLocation: "Pune Station...",  dropDate: "Dec 30, 2026", status: "In Transit" },
 ];

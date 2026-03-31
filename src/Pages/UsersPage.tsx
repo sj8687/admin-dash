@@ -29,7 +29,7 @@ function StatusBadge({ status }: { status: UserStatus }) {
     Banned: "border border-red-400   text-red-600   dark:text-red-400",
   };
   return (
-    <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-transparent ${cfg[status]}`}>
+    <span className={`px-3 py-1 rounded-[9px] text-xs font-semibold bg-transparent ${cfg[status]}`}>
       {status}
     </span>
   );
@@ -170,7 +170,7 @@ export default function UsersPage() {
         </div>
 
         {/* Search */}
-        <div className="relative flex-1 max-w-sm">
+        <div className="relative flex-1 max-w-[300px]">
           <Search size={13} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 dark:text-zinc-600" />
           <input
             type="text"

@@ -8,6 +8,7 @@ import { RiUserLocationLine } from "react-icons/ri";
 import { SiSessionize } from "react-icons/si";
 import { GiDuration } from "react-icons/gi";
 import { GiRugbyConversion } from "react-icons/gi";
+import { GiStorkDelivery } from "react-icons/gi";
 
 import type { StatCard } from "../../Types/types";
 
@@ -25,6 +26,7 @@ const iconMap: Record<string, React.ReactNode> = {
   SiSessionize: <SiSessionize size={22} />,
   GiDuration: <GiDuration size={27} />,
   GiRugbyConversion: <GiRugbyConversion size={22} />,
+  GiStorkDelivery: <GiStorkDelivery size={22} />,
 };
 
 interface StatCardProps {

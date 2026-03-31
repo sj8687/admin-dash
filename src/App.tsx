@@ -11,6 +11,7 @@ import UsersPage from "./Pages/UsersPage";
 import PartnerListTable from "./Pages/PartnerVerifylist";
 import TransactionTable from "./Pages/TransactionPage";
 import DeliveryPartnerPage from "./Pages/DriverListPage";
+import ShipmentPage from "./Pages/ShipmentPage";
 // import DashboardLayout from "./DashboardLayout";
 // import AnalyticsPage from "./components/ui/Analytics";
 // import PlaceholderPage from "./components/ui/placeholderpage";
@@ -60,9 +61,10 @@ const App: React.FC = () => {
 
           {/* Page routes */}
           {/* <Route path="/profile" element={<ProfilePage />} /> */}
-          <Route path="/users" element={<UsersPage />} /> 
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/orders/list" element={<ShipmentPage />} />
+ 
           {/* <Route path="/settings" element={<SettingsPage />} />
-          <Route path="/orders" element={<OrdersPage />} />
           <Route path="/orders/list" element={<OrdersPage />} />
           <Route path="/orders/detail" element={<PlaceholderPage />} />
           <Route path="/products" element={<ProductsPage />} />

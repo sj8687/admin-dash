@@ -1,3 +1,4 @@
+import { ShipmentStatus } from "@/Pages/ShipmentPage";
 import { UserStatus } from "@/Pages/UsersPage";
 
 // ── Navigation ──────────────────────────────────────────────
@@ -244,6 +245,21 @@ export interface AreaPoint { month: string; value: number; target: number; }
 export interface LinePoint { x: number; y: number; }
 export interface CampaignRoww { label: string; value: string | number; change: number; icon: React.ReactNode; highlight?: boolean; }
 export interface TicketStatt { label: string; value: number; icon: React.ReactNode; color: string; }
+
+
+export interface Shipment {
+  id: string;
+  trackingId: string;
+  customerName: string;
+  customerEmail: string;
+  pickupLocation: string;
+  pickupDate: string;
+  dropLocation: string;
+  dropDate: string;
+  status: ShipmentStatus;
+}
+
+
 
 
 
