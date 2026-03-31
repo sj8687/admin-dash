@@ -5,7 +5,9 @@ import { FaBoxOpen,FaTruckMoving } from "react-icons/fa";
 import { MdOutlinePendingActions,MdOutlineDirectionsBike,MdOutlineAirplanemodeInactive } from "react-icons/md";
 import {HiUserGroup} from "react-icons/hi";
 import { RiUserLocationLine } from "react-icons/ri";
-
+import { SiSessionize } from "react-icons/si";
+import { GiDuration } from "react-icons/gi";
+import { GiRugbyConversion } from "react-icons/gi";
 
 import type { StatCard } from "../../Types/types";
 
@@ -20,6 +22,9 @@ const iconMap: Record<string, React.ReactNode> = {
   MdOutlineAirplanemodeInactive: <MdOutlineAirplanemodeInactive size={22} />,
   HiUserGroup: <HiUserGroup size={22} />,
   RiUserLocationLine: <RiUserLocationLine size={22} />,
+  SiSessionize: <SiSessionize size={22} />,
+  GiDuration: <GiDuration size={27} />,
+  GiRugbyConversion: <GiRugbyConversion size={22} />,
 };
 
 interface StatCardProps {

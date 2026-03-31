@@ -7,6 +7,8 @@ import {
   MailOpen, Ticket, Clock, MessageCircle,
 } from "lucide-react";
 import { RiCalendarLine } from "react-icons/ri";
+import { AnalyticsStatsCards, DriverstatCards } from "@/Data/mockdata";
+import StatCardComponent from "@/Component/dashboards/StatCard";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -20,12 +22,12 @@ interface TicketStat { label: string; value: number; icon: React.ReactNode; colo
 
 // ─── Dummy Data ───────────────────────────────────────────────────────────────
 
-const STAT_CARDS: StatCard[] = [
-  { label: "Daily active users", value: "3,450", change: 7.7 },
-  { label: "Weekly sessions", value: "1,342", change: -9.8 },
-  { label: "Duration", value: "5.2 min", change: 7.7 },
-  { label: "Conversion Rate", value: "2.8%", change: 4.3 },
-];
+// const STAT_CARDS: StatCard[] = [
+//   { label: "Daily active users", value: "3,450", change: 7.7 },
+//   { label: "Weekly sessions", value: "1,342", change: -9.8 },
+//   { label: "Duration", value: "5.2 min", change: 7.7 },
+//   { label: "Conversion Rate", value: "2.8%", change: 4.3 },
+// ];
 
 const EARNING_BARS: BarPoint[] = [
   { day: "Mon", value: 60 }, { day: "Tue", value: 80 }, { day: "Wed", value: 45 },
@@ -258,8 +260,8 @@ export default function Analytics() {
       </div>
 
       {/* ── Stat Cards Row ── */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        {STAT_CARDS.map((s) => (
+      {/* <div className="grid grid-cols-2 lg:grid-cols-4 gap-3"> */}
+      {/* {STAT_CARDS.map((s) => (
           <Card key={s.label} className="p-4">
             <div className="flex items-center justify-between mb-2">
               <span className="text-xs text-gray-500 dark:text-zinc-500">{s.label}</span>
@@ -267,8 +269,17 @@ export default function Analytics() {
             </div>
             <p className="text-2xl font-bold text-gray-900 dark:text-white">{s.value}</p>
           </Card>
+        ))} */}
+      {/* </div> */}
+
+
+      <div className="grid grid-cols-2 mb-5  lg:grid-cols-4 gap-4">
+        {AnalyticsStatsCards.map((card) => (
+          <StatCardComponent key={card.id} card={card} />
         ))}
       </div>
+
+
 
       {/* ── Row 2: Earning Reports + Donut+Tickets ── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
@@ -293,16 +304,16 @@ export default function Analytics() {
               <div className="flex items-center gap-2 mb-2">
                 <span className="text-3xl font-medium text-gray-900 dark:text-white">
                   ₹{1.468}
-                </span>                
-                  <ChangePill change={4.2} />
+                </span>
+                <ChangePill change={4.2} />
               </div>
               <BarChart data={EARNING_BARS} />
             </div>
 
             {/* Earning rows */}
-            <div className="flex flex-col gap-2 w-80 shrink-0">
+            <div className="flex flex-col mt-5.5 gap-2 w-85 shrink-0">
               {EARNING_ROWS.map((row) => (
-                <div key={row.label} className="p-3 rounded-xl border border-gray-100 dark:border-[#2a2a2a] bg-gray-50 dark:bg-[#1a1a1a]">
+                <div key={row.label} className="p-4 rounded-xl border border-gray-100 dark:border-[#2a2a2a] bg-gray-50 dark:bg-[#1a1a1a]">
                   <div className="flex items-center justify-between mb-1.5">
                     <div className="flex items-center gap-1.5">
                       <span className="w-6 h-6 rounded-md flex items-center justify-center text-[10px] font-bold"

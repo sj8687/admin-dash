@@ -262,6 +262,44 @@ export const UsersStatsCards: StatCard[] = [
 
 
 
+export const AnalyticsStatsCards: StatCard[] = [
+  {
+    id: "Users",
+    title: "Daily active users",
+    value: "13,367",
+    change: "+20.1% from last month",
+    changeType: "positive",
+    icon: "HiUserGroup",
+  },
+  {
+    id: "Weekly sessions",
+    title: "Weekly sessions",
+    value: "1,423",
+    change: "-5.02% from last month",
+    changeType: "negative",
+    icon: "SiSessionize",
+  },
+  {
+    id: "Duration",
+    title: "Duration",
+    value: "5.2 mins",
+    change: "-3.58% from last month",
+    changeType: "negative",
+    icon: "GiDuration",
+  },
+  {
+    id: "Conversion Rate",
+    title: "Conversion Rate",
+    value: "15%",
+    change: "+10.35% from last month",
+    changeType: "positive",
+    icon: "GiRugbyConversion",
+  },
+
+];
+
+
+
 
 
 
