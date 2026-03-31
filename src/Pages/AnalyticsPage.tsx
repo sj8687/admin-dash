@@ -63,31 +63,37 @@ const TICKET_STATS: TicketStat[] = [
   { label: "Response Time", value: 1, icon: <MessageCircle size={14} />, color: "#84cc16" },
 ];
 
+
+
+
 // ─── SVG Helpers ──────────────────────────────────────────────────────────────
 
 function BarChart({ data }: { data: BarPoint[] }) {
   const max = Math.max(...data.map((d) => d.value));
 
-  const W = 320;
   const H = 140;
+  const gap = 4;
+  const bw = 100 / data.length - gap;
+  const W = 100;
 
-  const bw = 40; // wider bars
-  const gap = 10; // fixed small gap between bars
-  const startX = 0; // start from left edge
   return (
-    <svg viewBox={`0 0  ${H + 24}`} className="lg:w-full h-[160px]">
+    <svg
+      viewBox={`0 0 ${W} ${H + 24}`}
+      className="w-full h-[140px] sm:h-[160px] lg:h-[200px]"
+      preserveAspectRatio="none"
+    >
       <defs>
-        {/* Dark gradient like image */}
         <linearGradient id="barGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stopColor="#22c55e" />   
-          <stop offset="60%" stopColor="#16a34a" />  
-          <stop offset="100%" stopColor="#052e16" /> 
+          <stop offset="0%" stopColor="#22c55e" />
+          <stop offset="60%" stopColor="#16a34a" />
+          <stop offset="100%" stopColor="#052e16" />
         </linearGradient>
       </defs>
 
       {data.map((d, i) => {
         const bh = (d.value / max) * H;
-        const x = startX + i * (bw + gap); const y = H - bh;
+        const x = i * (bw + gap);
+        const y = H - bh;
 
         return (
           <g key={i}>
@@ -96,17 +102,14 @@ function BarChart({ data }: { data: BarPoint[] }) {
               y={y}
               width={bw}
               height={bh}
-              rx="8"
+              rx="2"
               fill="url(#barGrad)"
-              style={{ filter: "drop-shadow(0px 4px 6px rgba(0,0,0,0.25))" }}
             />
-
-            {/* Day label */}
             <text
-              x={x + bw / 2}
-              y={H + 16}
+              x={x + bw / 1.5}
+              y={H + 17}
               textAnchor="middle"
-              fontSize="10"
+              fontSize="5"
               fill="#9ca3af"
             >
               {d.day}
@@ -117,6 +120,10 @@ function BarChart({ data }: { data: BarPoint[] }) {
     </svg>
   );
 }
+
+
+
+
 
 function AreaChart({ data }: { data: LinePoint[] }) {
   const W = 400, H = 100;

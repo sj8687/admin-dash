@@ -8,6 +8,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { getPartnerDocsRequest, getPartnersRequest } from "@/Redux/PostSlice";
 import { RootState } from "@/Redux/Store";
 import DocModal from "../Component/layouts/PartnerDocModal";
+import { PartnerStatsCards, statCards } from "@/Data/mockdata";
+import StatCardComponent from "@/Component/dashboards/StatCard";
 
 
 type SortKey = "full_name" | "is_active" | "created_at" | "mobile_number" | "status";
@@ -178,6 +180,16 @@ export default function PartnerListTable() {
           </select>
         </div>
       </div>
+
+
+      
+            <div className="grid grid-cols-2  mb-10 lg:grid-cols-4 gap-4">
+              {PartnerStatsCards.map((card) => (
+                <StatCardComponent key={card.id} card={card} />
+              ))}
+            </div>
+
+
 
       {/* ── Table card ── */}
       <div className="w-full mt-8 rounded-2xl overflow-hidden bg-white dark:bg-[#0f0f0f] border border-gray-200 dark:border-[#1f1f1f]">

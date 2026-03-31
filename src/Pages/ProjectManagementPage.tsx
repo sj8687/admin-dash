@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
-import { RiCalendarLine, RiDownloadLine } from "react-icons/ri";
+import { RiCalendarLine } from "react-icons/ri";
 import { statCards } from "../Data/mockdata";
 import StatCardComponent from "../Component/dashboards/StatCard";
 import ProjectsChart from "../Component/dashboards/ProjectsChart";
-import ProfessionalsCard from "../Component/dashboards/ProfessionalsCard";
+import ProfessionalsCard from "../Component/dashboards/RatingCard";
 import RecentProjectsTable from "@/Component/dashboards/OrdersSummary";
-import DeliveryPartnerPage from "./DriverListPage";
 
 
 

@@ -2,9 +2,12 @@ import React from "react";
 import { RiArrowUpLine, RiArrowDownLine } from "react-icons/ri";
 import {GiMoneyStack} from "react-icons/gi"
 import { FaBoxOpen,FaTruckMoving } from "react-icons/fa";
-import { MdOutlinePendingActions } from "react-icons/md";
-import type { StatCard } from "../../Types/types";
+import { MdOutlinePendingActions,MdOutlineDirectionsBike,MdOutlineAirplanemodeInactive } from "react-icons/md";
+import {HiUserGroup} from "react-icons/hi";
+import { RiUserLocationLine } from "react-icons/ri";
 
+
+import type { StatCard } from "../../Types/types";
 
 
 
@@ -13,6 +16,10 @@ const iconMap: Record<string, React.ReactNode> = {
   FaBoxOpen: <FaBoxOpen size={22} />,
   FaTruckMoving: <FaTruckMoving size={22} />,
   MdOutlinePendingActions: <MdOutlinePendingActions size={22} />,
+  MdOutlineDirectionsBike: <MdOutlineDirectionsBike size={22} />,
+  MdOutlineAirplanemodeInactive: <MdOutlineAirplanemodeInactive size={22} />,
+  HiUserGroup: <HiUserGroup size={22} />,
+  RiUserLocationLine: <RiUserLocationLine size={22} />,
 };
 
 interface StatCardProps {

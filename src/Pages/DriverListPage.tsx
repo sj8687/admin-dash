@@ -1,9 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Trash2, Pencil, MapPin, Star, Search, FileDown, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download } from "lucide-react";
+import { Trash2, MapPin, Star, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download } from "lucide-react";
 import { Driver, DriverStatus } from "@/Types/types";
-import { DRIVERS } from "@/Data/mockdata";
+import { DRIVERS, DriverstatCards } from "@/Data/mockdata";
+import StatCardComponent from "@/Component/dashboards/StatCard";
 
 
 
@@ -133,7 +134,7 @@ function ShipmentChart() {
   const areaPath = `${linePath} L${w},${h} L0,${h} Z`;
 
   return (
-    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-25" preserveAspectRatio="none">
+    <svg viewBox={`0 0 ${w} ${h}`} className="w-full h-30" preserveAspectRatio="none">
       <defs>
         <linearGradient id="shipGrad" x1="0" y1="0" x2="0" y2="1">
           <stop offset="0%" stopColor="#84cc16" stopOpacity="0.35" />
@@ -174,8 +175,8 @@ function DelayPieChart() {
   });
 
   return (
-    <div className="flex flex-col gap-3">
-      <svg viewBox="0 0 180 180" className="w-44 h-44 mx-auto">
+    <div className="flex flex-col gap-4">
+      <svg viewBox="0 0 180 180" className="w-44 h-50 mx-auto">
         {paths.map((p, i) => (
           <path key={i} d={p.d} fill={p.color} stroke="white" strokeWidth="1.5" className="dark:[stroke:#0f0f0f]" />
         ))}
@@ -200,10 +201,10 @@ function DelayPieChart() {
 
 function DriverSidebar() {
   return (
-    <div className="flex flex-col gap-4 w-full">
+    <div className="flex flex-col gap-5 w-full">
 
       {/* Shipment Statistics */}
-      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
+      <div className="rounded-2xl border p-2.5 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
         <div className="flex items-center justify-between mb-1">
           <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100">Driver Statistics</h3>
           <span className="text-[10px] text-gray-400 dark:text-zinc-600 border border-gray-200 dark:border-zinc-700 px-2 py-0.5 rounded-md">
@@ -223,7 +224,7 @@ function DriverSidebar() {
       </div>
 
       {/* Performance Metrics */}
-      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
+      <div className="rounded-[9px] border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
         <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-3">Performance Metrics</h3>
         <p className="text-xs text-gray-500 dark:text-zinc-500 mb-2">On-Time Delivery Rate:</p>
         <div className="w-full h-3 rounded-full bg-gray-100 dark:bg-zinc-800 overflow-hidden mb-2">
@@ -236,7 +237,7 @@ function DriverSidebar() {
       </div>
 
       {/* Delay Reasons */}
-      <div className="rounded-2xl border p-4 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
+      <div className="rounded-2xl border p-3 bg-white border-gray-200 dark:bg-[#141414] dark:border-gray-600">
         <h3 className="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-1">Delay Reasons Breakdown</h3>
         <p className="text-xs text-gray-400 dark:text-zinc-600 mb-3">Delay Cases</p>
         <DelayPieChart />
@@ -323,7 +324,7 @@ export default function DeliveryPartnerPage() {
   const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4";
 
   return (
-    <div className="w-full" style={{ fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
+    <div className="w-full">
 
       {/* ── Header ── */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-5">
@@ -357,6 +358,17 @@ export default function DeliveryPartnerPage() {
           </button>
         </div>
       </div>
+
+
+
+      <div className="grid grid-cols-2 mb-5  lg:grid-cols-4 gap-4">
+        {DriverstatCards.map((card) => (
+          <StatCardComponent key={card.id} card={card} />
+        ))}
+      </div>
+
+<br />
+
 
       {/* ── Layout: cards + sidebar ── */}
       <div className="flex gap-5 items-start">
@@ -411,7 +423,7 @@ export default function DeliveryPartnerPage() {
 
         {/* Sidebar */}
         <div className="w-72 shrink-0 hidden lg:block">
-          <h2 className="text-sm font-semibold text-gray-900 dark:text-zinc-100 mb-3">Driver Details</h2>
+          <h2 className="text-[18px] font-semibold text-gray-900 dark:text-zinc-100 mb-3">Driver Details</h2>
           <DriverSidebar />
         </div>
       </div>

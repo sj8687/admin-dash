@@ -139,6 +139,132 @@ export const statCards: StatCard[] = [
   },
 ];
 
+
+
+
+export const DriverstatCards: StatCard[] = [
+  {
+    id: "Driver",
+    title: "Total Driver's",
+    value: "35,567",
+    change: "+20.1% from last month",
+    changeType: "positive",
+    icon: "FaTruckMoving",
+  },
+  {
+    id: "Active Driver",
+    title: "Active Driver's",
+    value: "1,423",
+    change: "+5.02% from last month",
+    changeType: "positive",
+    icon: "MdOutlineDirectionsBike",
+  },
+  {
+    id: "In-Active Driver's",
+    title: "In-Active Driver's",
+    value: "3,423",
+    change: "-3.58% from last month",
+    changeType: "negative",
+    icon: "MdOutlineAirplanemodeInactive",
+  },
+  {
+    id: "Block",
+    title: "Blocked Driver's",
+    value: "150",
+    change: "+10.35% from last month",
+    changeType: "positive",
+    icon: "MdOutlinePendingActions",
+  },
+
+];
+
+
+
+
+
+
+export const PartnerStatsCards: StatCard[] = [
+  {
+    id: "Driver",
+    title: "Total Verify Partner's",
+    value: "13,367",
+    change: "+20.1% from last month",
+    changeType: "positive",
+    icon: "FaTruckMoving",
+  },
+  {
+    id: "Pending Partner's",
+    title: "Pending Partner's",
+    value: "1,423",
+    change: "-5.02% from last month",
+    changeType: "negative",
+    icon: "MdOutlineDirectionsBike",
+  },
+  {
+    id: " cancel",
+    title: "Canceled Partner's",
+    value: "3,423",
+    change: "-3.58% from last month",
+    changeType: "negative",
+    icon: "MdOutlineAirplanemodeInactive",
+  },
+  {
+    id: "Block",
+    title: "Blocked Partner's",
+    value: "150",
+    change: "+10.35% from last month",
+    changeType: "positive",
+    icon: "MdOutlinePendingActions",
+  },
+
+];
+
+
+
+
+
+export const UsersStatsCards: StatCard[] = [
+  {
+    id: "Users",
+    title: "Total Users",
+    value: "13,367",
+    change: "+20.1% from last month",
+    changeType: "positive",
+    icon: "HiUserGroup",
+  },
+  {
+    id: "Active User's",
+    title: "Active User's",
+    value: "1,423",
+    change: "-5.02% from last month",
+    changeType: "negative",
+    icon: "RiUserLocationLine",
+  },
+  {
+    id: "In-Active User's",
+    title: "In-Active User's",
+    value: "3,423",
+    change: "-3.58% from last month",
+    changeType: "negative",
+    icon: "MdOutlineAirplanemodeInactive",
+  },
+  {
+    id: "Block",
+    title: "Blocked User's",
+    value: "150",
+    change: "+10.35% from last month",
+    changeType: "positive",
+    icon: "MdOutlinePendingActions",
+  },
+
+];
+
+
+
+
+
+
+
 // ── Chart Data ────────────────────────────────────────────────
 export const chartData: ChartDataPoint[] = [
   { date: "Jun 18", mobile: 65, desktop: 88 },

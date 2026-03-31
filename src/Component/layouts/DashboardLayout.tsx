@@ -6,7 +6,6 @@ import Topbar from "./Topbar";
 import {ThemeContext, useThemeState } from "./darkmode";
 
 
-
 const DashboardLayout: React.FC = () => {
   const sidebarState = useSidebarState();
   const themeState = useThemeState();

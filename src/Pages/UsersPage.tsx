@@ -5,10 +5,11 @@ import {
   Search, Download, MoreHorizontal,
   ChevronLeft, ChevronRight, ChevronDown,
 } from "lucide-react";
-import { DUMMY_USERS } from "@/Data/mockdata";
+import { DUMMY_USERS, UsersStatsCards } from "@/Data/mockdata";
+import StatCardComponent from "@/Component/dashboards/StatCard";
 
 
-export type UserRole   = "Admin" | "User" | "Manager" | "Support";
+export type UserRole = "Admin" | "User" | "Manager" | "Support";
 export type UserStatus = "Active" | "Inactive" | "Banned";
 
 const PAGE_SIZE = 7;
@@ -23,9 +24,9 @@ function formatDate(iso: string) {
 
 function StatusBadge({ status }: { status: UserStatus }) {
   const cfg: Record<UserStatus, string> = {
-    Active:   "border border-green-400 text-green-600 dark:text-green-400",
+    Active: "border border-green-400 text-green-600 dark:text-green-400",
     Inactive: "border border-yellow-400 text-yellow-600 dark:text-yellow-400",
-    Banned:   "border border-red-400   text-red-600   dark:text-red-400",
+    Banned: "border border-red-400   text-red-600   dark:text-red-400",
   };
   return (
     <span className={`px-3 py-1 rounded-full text-xs font-semibold bg-transparent ${cfg[status]}`}>
@@ -51,21 +52,21 @@ function StatusBadge({ status }: { status: UserStatus }) {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function UsersPage() {
-  const [search,       setSearch]       = useState("");
+  const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState<"all" | UserStatus>("all");
-  const [page,         setPage]         = useState(1);
-  const [menuOpen,     setMenuOpen]     = useState<string | null>(null);
-  const [statusOpen,   setStatusOpen]   = useState(false);
+  const [page, setPage] = useState(1);
+  const [menuOpen, setMenuOpen] = useState<string | null>(null);
+  const [statusOpen, setStatusOpen] = useState(false);
 
   const filtered = useMemo(() => {
     let list = [...DUMMY_USERS];
     const q = search.trim().toLowerCase();
     if (q) {
       list = list.filter((u) =>
-        u.name.toLowerCase().includes(q)   ||
-        u.email.toLowerCase().includes(q)  ||
-        u.phone.includes(q)                ||
-        u.address.toLowerCase().includes(q)||
+        u.name.toLowerCase().includes(q) ||
+        u.email.toLowerCase().includes(q) ||
+        u.phone.includes(q) ||
+        u.address.toLowerCase().includes(q) ||
         u.id.toLowerCase().includes(q)
       );
     }
@@ -74,10 +75,10 @@ export default function UsersPage() {
   }, [search, statusFilter]);
 
   const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
-  const safePage   = Math.min(page, totalPages);
-  const paged      = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
+  const safePage = Math.min(page, totalPages);
+  const paged = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
-  const handleSearch = (v: string) => { setSearch(v);       setPage(1); };
+  const handleSearch = (v: string) => { setSearch(v); setPage(1); };
   const handleStatus = (v: typeof statusFilter) => { setStatusFilter(v); setStatusOpen(false); setPage(1); };
 
   // Export to Excel
@@ -91,8 +92,8 @@ export default function UsersPage() {
       .map((r) => r.map((c) => `"${String(c).replace(/"/g, '""')}"`).join(","))
       .join("\n");
     const blob = new Blob([csv], { type: "application/vnd.ms-excel;charset=utf-8" });
-    const url  = URL.createObjectURL(blob);
-    const a    = document.createElement("a");
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
     a.href = url; a.download = "users.xls"; a.click();
     URL.revokeObjectURL(url);
   };
@@ -126,15 +127,24 @@ export default function UsersPage() {
         </button>
       </div>
 
+
+      <div className="grid grid-cols-2  lg:grid-cols-4 gap-4">
+        {UsersStatsCards.map((card) => (
+          <StatCardComponent key={card.id} card={card} />
+        ))}
+      </div>
+<br />
+
+
       {/* ── Filters ── */}
       <div className="flex items-center gap-3">
         {/* Status dropdown */}
         <div className="relative" onClick={(e) => e.stopPropagation()}>
           <button
             onClick={() => setStatusOpen((o) => !o)}
-            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[9px] text-[13px] font-semibold border
+            className="inline-flex items-center gap-2 px-3.5 py-2 rounded-[9px] text-[13px] font-medium border
                        bg-white border-gray-400 text-gray-700 hover:bg-gray-50
-                       dark:bg-[#181818] dark:border-[#2a2a2a] dark:text-zinc-300 dark:hover:bg-[#222]"
+                       dark:bg-[#181818] dark:border-[#a78080] dark:text-zinc-300 dark:hover:bg-[#222]"
           >
             Status
             <ChevronDown size={13} className={`transition-transform duration-200 ${statusOpen ? "rotate-180" : ""}`} />
@@ -148,9 +158,9 @@ export default function UsersPage() {
                   onClick={() => handleStatus(s)}
                   className={`w-full text-left px-4 py-2.5 text-xs font-medium transition-colors
                               ${statusFilter === s
-                                ? "bg-gray-100 text-gray-900 dark:bg-zinc-800 dark:text-white"
-                                : "text-gray-600 hover:bg-gray-50 dark:text-zinc-400 dark:hover:bg-zinc-800"
-                              }`}
+                      ? "bg-gray-100 text-gray-900 dark:bg-zinc-800 dark:text-white"
+                      : "text-gray-600 hover:bg-gray-50 dark:text-zinc-400 dark:hover:bg-zinc-800"
+                    }`}
                 >
                   {s === "all" ? "All Status" : s}
                 </button>
@@ -169,7 +179,7 @@ export default function UsersPage() {
             onChange={(e) => handleSearch(e.target.value)}
             className="w-full pl-8 pr-4 py-2 rounded-[9px] text-[13px] outline-none
                        bg-white border border-gray-400 text-gray-800 placeholder-gray-400 focus:ring-1 focus:ring-gray-300
-                       dark:bg-[#181818] dark:border-[#2a2a2a] dark:text-zinc-300 dark:placeholder-zinc-600 dark:focus:ring-zinc-700"
+                       dark:bg-[#181818] dark:border-[#857171] dark:text-zinc-300 dark:placeholder-zinc-600 dark:focus:ring-zinc-700"
           />
         </div>
       </div>
@@ -184,7 +194,7 @@ export default function UsersPage() {
             <thead>
               <tr className="bg-[#52B788]">
                 <th className={`${thCls} w-10`}>#</th>
-                <th className={thCls}>User ID</th>
+                {/* <th className={thCls}>User ID</th> */}
                 <th className={thCls}>Name</th>
                 <th className={thCls}>Email</th>
                 <th className={thCls}>Phone</th>
@@ -205,9 +215,9 @@ export default function UsersPage() {
                 </tr>
               ) : (
                 paged.map((u, i) => {
-                  const serial  = (safePage - 1) * PAGE_SIZE + i + 1;
-                  const isEven  = i % 2 === 0;
-                  const rowBg   = u.status === "Active" && isEven
+                  const serial = (safePage - 1) * PAGE_SIZE + i + 1;
+                  const isEven = i % 2 === 0;
+                  const rowBg = u.status === "Active" && isEven
                     ? "bg-green-50/60 dark:bg-green-950/10"
                     : "bg-white dark:bg-[#0f0f0f]";
 
@@ -223,19 +233,19 @@ export default function UsersPage() {
                       </td>
 
                       {/* User ID */}
-                      <td className={`${tdCls} ${borderB}`}>
+                      {/* <td className={`${tdCls} ${borderB}`}>
                         <span className="text-xs font-mono font-semibold text-gray-500 dark:text-zinc-500">{u.id}</span>
-                      </td>
+                      </td> */}
 
                       {/* Name */}
                       <td className={`${tdCls} ${borderB}`}>
                         <div className="flex items-center gap-2.5">
                           {/* Avatar initials */}
-                          <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center shrink-0">
-                            <span className="text-[11px] font-bold text-green-700 dark:text-green-400">
+                          {/* <div className="w-8 h-8 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center shrink-0"> */}
+                            {/* <span className="text-[11px] font-bold text-green-700 dark:text-green-400">
                               {u.name.split(" ").map((n) => n[0]).join("").slice(0, 2)}
-                            </span>
-                          </div>
+                            </span> */}
+                          {/* </div> */}
                           <span className="font-semibold text-gray-900 dark:text-zinc-100">{u.name}</span>
                         </div>
                       </td>
@@ -289,9 +299,9 @@ export default function UsersPage() {
                                 onClick={() => setMenuOpen(null)}
                                 className={`w-full text-left px-4 py-2.5 text-xs font-medium transition-colors
                                            ${action === "Delete" || action === "Ban User"
-                                             ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
-                                             : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
-                                           }`}
+                                    ? "text-red-500 hover:bg-red-50 dark:hover:bg-red-950/30"
+                                    : "text-gray-600 hover:bg-gray-50 hover:text-gray-900 dark:text-zinc-400 dark:hover:bg-zinc-800 dark:hover:text-zinc-200"
+                                  }`}
                               >
                                 {action}
                               </button>
