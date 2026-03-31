@@ -12,6 +12,7 @@ import PartnerListTable from "./Pages/PartnerVerifylist";
 import TransactionTable from "./Pages/TransactionPage";
 import DeliveryPartnerPage from "./Pages/DriverListPage";
 import ShipmentPage from "./Pages/ShipmentPage";
+import PartnerDetailPage from "./Component/ui/DriverDetails";
 // import DashboardLayout from "./DashboardLayout";
 // import AnalyticsPage from "./components/ui/Analytics";
 // import PlaceholderPage from "./components/ui/placeholderpage";
@@ -63,10 +64,11 @@ const App: React.FC = () => {
           {/* <Route path="/profile" element={<ProfilePage />} /> */}
           <Route path="/users" element={<UsersPage />} />
           <Route path="/orders/list" element={<ShipmentPage />} />
+          <Route path="/orders/detail" element={<PartnerDetailPage />} />
+
  
           {/* <Route path="/settings" element={<SettingsPage />} />
           <Route path="/orders/list" element={<OrdersPage />} />
-          <Route path="/orders/detail" element={<PlaceholderPage />} />
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/products/list" element={<ProductsPage />} />
           <Route path="/products/add" element={<PlaceholderPage />} /> */}
