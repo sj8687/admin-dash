@@ -337,6 +337,45 @@ export const ShipmentstatCards: StatCard[] = [
 ];
 
 
+const statsConfig = [
+  {
+    key: "totaldrivers",
+    id: "total",
+    title: "Total Drivers",
+    icon: "FaTruckMoving",
+    type: "neutral",
+  },
+  {
+    key: "online_drivers",
+    id: "online",
+    title: "Online Drivers",
+    icon: "MdOutlineDirectionsBike",
+    type: "positive",
+  },
+  {
+    key: "offline_drivers",
+    id: "offline",
+    title: "Offline Drivers",
+    icon: "MdOutlineAirplanemodeInactive",
+    type: "neutral",
+  },
+  {
+    key: "blocked_drivers",
+    id: "blocked",
+    title: "Blocked Drivers",
+    icon: "MdOutlinePendingActions",
+    type: "negative",
+  },
+];
+
+
+
+
+
+
+
+
+
 
 
 

@@ -21,9 +21,10 @@ export interface StatCard {
   title: string;
   value: string;
   change: string;
-  changeType: "positive" | "negative" | "neutral";
+  changeType: string
   icon: string;
 }
+
 
 // ── Chart ────────────────────────────────────────────────────
 export interface ChartDataPoint {
@@ -342,3 +343,14 @@ export type VerifyDocsPayload = {
   bank: "verified" | "pending" | "rejected";
   vehicleDocument: "verified" | "pending" | "rejected";
 };
+
+
+
+//driver stats
+export interface DriverStats {
+  totaldrivers: number;
+  newdrivers: number;
+  online_drivers: number;
+  offline_drivers: number;
+  blocked_drivers: number;
+}

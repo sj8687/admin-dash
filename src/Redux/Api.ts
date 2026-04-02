@@ -91,3 +91,14 @@ export const verifyPartnerDocsAPI = async (
 
   return res.data;
 };
+
+
+
+
+export const getDriverStatusCountAPI = async () => {
+  const res = await axios.get(
+    "https://bar-lawyer-owned-brilliant.trycloudflare.com/api/v1/super-admin/partner/status/count"
+  );
+
+  return res.data.data;
+};

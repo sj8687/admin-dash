@@ -1,4 +1,4 @@
-import { PartnerDocs, PartnerListItem, VerifyDocsPayload } from "@/Types/types";
+import { DriverStats, PartnerDocs, PartnerListItem, VerifyDocsPayload } from "@/Types/types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 
@@ -30,6 +30,12 @@ interface OrdersState {
   verifyLoading: boolean;
   verifyError: string | null;
 
+
+  driverStats: DriverStats | null;
+  statsLoading: boolean;
+  statsError: string | null;
+
+
   error: string | null;
 }
 
@@ -54,6 +60,10 @@ const initialState: OrdersState = {
   partnerDocs: null,
   partnerDocsLoading: false,
   partnerDocsError: null,
+
+  driverStats: null,
+  statsLoading: false,
+  statsError: null,
 
   verifyLoading: false,
   verifyError: null,
@@ -133,17 +143,30 @@ const postSlice = createSlice({
       state.verifyLoading = true;
       state.verifyError = null;
     },
-
     verifyPartnerDocsSuccess(state) {
       state.verifyLoading = false;
     },
-
     verifyPartnerDocsFailure(state, action: PayloadAction<string>) {
       state.verifyLoading = false;
       state.verifyError = action.payload;
     },
 
-    
+
+    fetchDriverStatsRequest(state) {
+      state.statsLoading = true;
+    },
+
+    fetchDriverStatsSuccess(state, action: PayloadAction<DriverStats>) {
+      state.statsLoading = false;
+      state.driverStats = action.payload;
+    },
+
+    fetchDriverStatsFailure(state, action: PayloadAction<string>) {
+      state.statsLoading = false;
+      state.statsError = action.payload;
+    },
+
+
   },
 
 
@@ -166,9 +189,14 @@ export const {
   getPartnerDocsSuccess,
   getPartnerDocsFailure,
 
-    verifyPartnerDocsRequest,
+  verifyPartnerDocsRequest,
   verifyPartnerDocsSuccess,
   verifyPartnerDocsFailure,
+
+  fetchDriverStatsRequest,
+  fetchDriverStatsSuccess,
+  fetchDriverStatsFailure,
+  
 } = postSlice.actions;
 
 export default postSlice.reducer;

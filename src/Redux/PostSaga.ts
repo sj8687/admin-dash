@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { fetchPartnerDocs, getPartnersAPI, loginAPI, logoutAPI, verifyPartnerDocsAPI, } from "./Api";
+import { fetchPartnerDocs, getDriverStatusCountAPI, getPartnersAPI, loginAPI, logoutAPI, verifyPartnerDocsAPI, } from "./Api";
 import {
   loginRequest,
   loginSuccess,
@@ -16,6 +16,9 @@ import {
   verifyPartnerDocsSuccess,
   verifyPartnerDocsFailure,
   verifyPartnerDocsRequest,
+  fetchDriverStatsSuccess,
+  fetchDriverStatsFailure,
+  fetchDriverStatsRequest,
 
 } from "./PostSlice";
 import type { SagaIterator } from "redux-saga";
@@ -92,12 +95,25 @@ function* handleVerifyPartnerDocs(action: any): any {
 }
 
 
+
+function* handleFetchDriverStats(): any {
+  try {
+    const data = yield call(getDriverStatusCountAPI);
+    yield put(fetchDriverStatsSuccess(data));
+  } catch (error: any) {
+    yield put(fetchDriverStatsFailure(error.message));
+  }
+}
+
+
+
 export default function* postSaga(): SagaIterator {
   yield takeLatest(loginRequest.type, handleLogin);
   yield takeLatest(logoutRequest.type, handleLogout);
   yield takeLatest(getPartnersRequest.type, handleGetPartners);
   yield takeLatest(getPartnerDocsRequest.type, handleGetPartnerDocs);
   yield takeLatest(verifyPartnerDocsRequest.type, handleVerifyPartnerDocs);
+  yield takeLatest(fetchDriverStatsRequest.type, handleFetchDriverStats);
 
 }
 

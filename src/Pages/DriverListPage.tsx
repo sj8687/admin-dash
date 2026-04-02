@@ -1,10 +1,15 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo, use } from "react";
 import { Trash2, MapPin, Star, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download } from "lucide-react";
-import { Driver, DriverStatus } from "@/Types/types";
+import { Driver, DriverStatus, StatCard } from "@/Types/types";
 import { DRIVERS, DriverstatCards } from "@/Data/mockdata";
 import StatCardComponent from "@/Component/dashboards/StatCard";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/Redux/Store";
+import { fetchDriverStatsRequest } from "@/Redux/PostSlice";
+import SkeletonCard from "@/Component/ui/StatsSkelton";
 
 
 
@@ -275,6 +280,9 @@ export default function DeliveryPartnerPage() {
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
+  // const [cardss, setCards] = useState<StatCard[]>([]);
+
+
   const cols = useColsPerPage();
   const pageSize = cols * 3; // always 3 rows
 
@@ -323,6 +331,99 @@ export default function DeliveryPartnerPage() {
   // Grid class: 3 cols default, 4 cols on xl (≥1280px)
   const gridClass = "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-3 gap-4";
 
+
+
+
+  const calculatePercent = (value: number, total: number) => {
+    if (!total || total === 0) return { percent: 0, label: "0%" };
+
+    const percent = (value / total) * 100;
+
+    return {
+      percent,
+      label: `${percent.toFixed(1)}%`,
+    };
+  };
+
+  const getChangeType = (percent: number) => {
+    if (percent > 60) return "positive";   // green
+    if (percent < 20) return "negative";   // red
+    return "neutral";                      // gray/yellow
+  };
+
+  const dispatch = useDispatch();
+  const { driverStats, statsLoading } = useSelector(
+    (state: RootState) => state.posts
+  );
+
+  useEffect(() => {
+    dispatch(fetchDriverStatsRequest());
+  }, [dispatch]);
+
+
+  const cards = useMemo(() => {
+    if (!driverStats) return [];
+
+    const total = driverStats.totaldrivers;
+
+    const newDrivers = calculatePercent(driverStats.newdrivers, total);
+    const online = calculatePercent(driverStats.online_drivers, total);
+    const offline = calculatePercent(driverStats.offline_drivers, total);
+    const blocked = calculatePercent(driverStats.blocked_drivers, total);
+
+    return [
+      {
+        id: "total",
+        title: "Total Drivers",
+        value: total.toString(),
+        change: `${newDrivers.label} new drivers`,
+        changeType: getChangeType(newDrivers.percent),
+        icon: "FaTruckMoving",
+      },
+      {
+        id: "online",
+        title: "Online Drivers",
+        value: driverStats.online_drivers.toString(),
+        change: `${online.label} of total`,
+        changeType: getChangeType(online.percent),
+        icon: "MdOutlineDirectionsBike",
+      },
+      {
+        id: "offline",
+        title: "Offline Drivers",
+        value: driverStats.offline_drivers.toString(),
+        change: `${offline.label} of total`,
+        changeType: getChangeType(offline.percent),
+        icon: "MdOutlineAirplanemodeInactive",
+      },
+      {
+        id: "blocked",
+        title: "Blocked Drivers",
+        value: driverStats.blocked_drivers.toString(),
+        change: `${blocked.label} of total`,
+        changeType: getChangeType(blocked.percent),
+        icon: "MdOutlinePendingActions",
+      },
+    ];
+  }, [driverStats]);
+
+
+
+async function handleFetchDriverStats() {
+  try {
+    const response = await axios.get(
+      "https://bar-lawyer-owned-brilliant.trycloudflare.com/api/v1/super-admin/partner/all"
+    );
+
+    console.log(response.data);
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+handleFetchDriverStats();
+
+
   return (
     <div className="w-full">
 
@@ -361,13 +462,17 @@ export default function DeliveryPartnerPage() {
 
 
 
-      <div className="grid grid-cols-2 mb-5  lg:grid-cols-4 gap-4">
-        {DriverstatCards.map((card) => (
-          <StatCardComponent key={card.id} card={card} />
-        ))}
+      <div className="grid grid-cols-2 mb-5 lg:grid-cols-4 gap-4">
+        {statsLoading
+          ? [...Array(4)].map((_, index) => (
+            <SkeletonCard key={index} />
+          ))
+          : cards.map((card) => (
+            <StatCardComponent key={card.id} card={card} />
+          ))}
       </div>
 
-<br />
+      <br />
 
 
       {/* ── Layout: cards + sidebar ── */}
