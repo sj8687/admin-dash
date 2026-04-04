@@ -32,7 +32,7 @@ export async function logoutAPI() {
 
 export async function getPartnersAPI() {
   const res = await axios.get(
-    "https://elliott-hewlett-picks-dave.trycloudflare.com/api/v1/super-admin/partners",
+    "https://textiles-hamburg-making-rivers.trycloudflare.com/api/v1/super-admin/partners",
     {
       headers: {
         "X-Super-Admin-API-Key": "123",
@@ -52,7 +52,7 @@ interface ApiResponse<T> {
 
 export const fetchPartnerDocs = async (partnerId: string): Promise<PartnerDocs> => {
   const res = await axios.post<ApiResponse<PartnerDocs>>(
-    "https://elliott-hewlett-picks-dave.trycloudflare.com/api/v1/super-admin/partner/documents",
+    "https://textiles-hamburg-making-rivers.trycloudflare.com/api/v1/super-admin/partner/documents",
     { partner_id: partnerId },
     {
       headers: {
@@ -74,7 +74,7 @@ export const verifyPartnerDocsAPI = async (
   payload: VerifyDocsPayload
 ) => {
   const res = await axios.patch(
-    "https://elliott-hewlett-picks-dave.trycloudflare.com/api/v1/super-admin/partner/documents/status",
+    "https://textiles-hamburg-making-rivers.trycloudflare.com/api/v1/super-admin/partner/documents/status",
     {
       partner_id: partnerId,
       ...payload,
@@ -97,7 +97,46 @@ export const verifyPartnerDocsAPI = async (
 
 export const getDriverStatusCountAPI = async () => {
   const res = await axios.get(
-    "https://bar-lawyer-owned-brilliant.trycloudflare.com/api/v1/super-admin/partner/status/count"
+    "https://textiles-hamburg-making-rivers.trycloudflare.com/api/v1/super-admin/partner/status/count"
+  );
+
+  return res.data.data;
+};
+
+
+
+export const fetchDriversAPI = async () => {
+  const res = await axios.get(
+    "https://textiles-hamburg-making-rivers.trycloudflare.com/api/v1/super-admin/partners/all"
+  );
+
+  return res.data?.data || [];
+};
+
+
+
+export const toggleDriverStatusAPI = async (payload: {
+  partnerId: string;
+  isActive: boolean;
+}) => {
+  const res = await axios.post(
+    "https://textiles-hamburg-making-rivers.trycloudflare.com/api/v1/super-admin/partner/toggle/isactive",
+    payload
+  );
+
+  return res.data.data;
+};
+
+
+
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIyNzJlZTgwOC1jMmVlLTQxOTEtYTZkOC0zZGQyNjU2MjMyN2QiLCJtb2JpbGUiOiI5MzU5MjQwMDAwIiwidHlwZSI6InVzZXIiLCJpYXQiOjE3NzUyOTYzMjMsImV4cCI6MTc3NTI5OTkyM30.of5am4-_KDij8PglpKda5PkEADJ8aZNS6mZTuwGwm3M";
+
+export const fetchPaymentsAPI = async () => {
+  const res = await axios.get(
+    "http://192.168.1.14:3000/api/v1/admin/payment-history",
+    {
+      headers: { Authorization: `Bearer ${token}` },
+    }
   );
 
   return res.data.data;

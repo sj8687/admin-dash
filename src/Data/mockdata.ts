@@ -337,40 +337,6 @@ export const ShipmentstatCards: StatCard[] = [
 ];
 
 
-const statsConfig = [
-  {
-    key: "totaldrivers",
-    id: "total",
-    title: "Total Drivers",
-    icon: "FaTruckMoving",
-    type: "neutral",
-  },
-  {
-    key: "online_drivers",
-    id: "online",
-    title: "Online Drivers",
-    icon: "MdOutlineDirectionsBike",
-    type: "positive",
-  },
-  {
-    key: "offline_drivers",
-    id: "offline",
-    title: "Offline Drivers",
-    icon: "MdOutlineAirplanemodeInactive",
-    type: "neutral",
-  },
-  {
-    key: "blocked_drivers",
-    id: "blocked",
-    title: "Blocked Drivers",
-    icon: "MdOutlinePendingActions",
-    type: "negative",
-  },
-];
-
-
-
-
 
 
 
@@ -616,7 +582,7 @@ export const mockProjects: RecentProject[] = [
 
 
 export const DUMMY_TRANSACTIONS: Transaction[] = [
-  { id: "1",  trackingId: "#201238", clientName: "Shreyash Jadhav", deliveryPartnerName: "Sanket Inamdar", dateTime: "2026-03-01T10:30:00Z", amount: 245, status: "pending"    },
+  { id: "1",  trackingId: "2012388888888888888888", clientName: "Shreyash Jadhav", deliveryPartnerName: "Sanket Inamdar", dateTime: "2026-03-01T10:30:00Z", amount: 245, status: "pending"    },
   { id: "2",  trackingId: "#201239", clientName: "Ravi Kumar",      deliveryPartnerName: "Priya Sharma",   dateTime: "2026-03-01T11:00:00Z", amount: 180, status: "failed"     },
   { id: "3",  trackingId: "#201240", clientName: "Neha Patil",      deliveryPartnerName: "Rohit Desai",    dateTime: "2026-03-01T12:15:00Z", amount: 320, status: "processing" },
   { id: "4",  trackingId: "#201241", clientName: "Ajay Singh",      deliveryPartnerName: "Meena Joshi",    dateTime: "2026-03-02T09:00:00Z", amount: 150, status: "success"    },
@@ -637,21 +603,21 @@ export const DUMMY_TRANSACTIONS: Transaction[] = [
 
 // ─── Dummy Data ───────────────────────────────────────────────────────────────
 
-export const DRIVERS: Driver[] = [
-  { id: "1",  name: "Suresh Kumar",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Suresh",  status: "On Route",  driverId: "DRV-001", phone: "+91 23456 78923", vehicle: "Tata Ace - MH 01 SB 3645", rating: 4.8, trips: 1240, earnings: "82K", location: "Andheri, Mumbai" },
-  { id: "2",  name: "Ravi Sharma",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Ravi",    status: "Completed", driverId: "DRV-002", phone: "+91 23456 78924", vehicle: "Tata Ace - MH 02 AB 1234", rating: 4.6, trips: 980,  earnings: "68K", location: "Bandra, Mumbai" },
-  { id: "3",  name: "Amit Patil",    photo: "https://api.dicebear.com/7.x/personas/svg?seed=Amit",    status: "Canceled",  driverId: "DRV-003", phone: "+91 23456 78925", vehicle: "Mahindra - MH 03 CD 5678", rating: 4.3, trips: 760,  earnings: "54K", location: "Dadar, Mumbai" },
-  { id: "4",  name: "Vijay Nair",    photo: "https://api.dicebear.com/7.x/personas/svg?seed=Vijay",   status: "Completed", driverId: "DRV-004", phone: "+91 23456 78926", vehicle: "Tata Ace - MH 04 EF 9012", rating: 4.9, trips: 1560, earnings: "95K", location: "Powai, Mumbai" },
-  { id: "5",  name: "Deepak Singh",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Deepak",  status: "Canceled",  driverId: "DRV-005", phone: "+91 23456 78927", vehicle: "Ashok Leyland - MH 05 GH", rating: 4.1, trips: 430,  earnings: "31K", location: "Kurla, Mumbai" },
-  { id: "6",  name: "Manoj Desai",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Manoj",   status: "Completed", driverId: "DRV-006", phone: "+91 23456 78928", vehicle: "Tata Ace - MH 06 IJ 3456", rating: 4.7, trips: 1120, earnings: "79K", location: "Thane, Mumbai" },
-  { id: "7",  name: "Rahul Verma",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Rahul",   status: "Completed", driverId: "DRV-007", phone: "+91 23456 78929", vehicle: "Maruti - MH 07 KL 7890",   rating: 4.5, trips: 890,  earnings: "62K", location: "Borivali, Mumbai" },
-  { id: "8",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
-  { id: "9",  name: "Kiran Rao",     photo: "https://api.dicebear.com/7.x/personas/svg?seed=Kiran",   status: "Completed", driverId: "DRV-009", phone: "+91 23456 78931", vehicle: "Mahindra - MH 09 OP 6789", rating: 4.8, trips: 1380, earnings: "88K", location: "Goregaon, Mumbai" },
-  { id: "10",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
-  { id: "11",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
-  { id: "12",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
+// export const DRIVERS: Driver[] = [
+//   { id: "1",  name: "Suresh Kumar",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Suresh",  status: "On Route",  driverId: "DRV-001", phone: "+91 23456 78923", vehicle: "Tata Ace - MH 01 SB 3645", rating: 4.8, trips: 1240, earnings: "82K", location: "Andheri, Mumbai" },
+//   { id: "2",  name: "Ravi Sharma",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Ravi",    status: "Completed", driverId: "DRV-002", phone: "+91 23456 78924", vehicle: "Tata Ace - MH 02 AB 1234", rating: 4.6, trips: 980,  earnings: "68K", location: "Bandra, Mumbai" },
+//   { id: "3",  name: "Amit Patil",    photo: "https://api.dicebear.com/7.x/personas/svg?seed=Amit",    status: "Canceled",  driverId: "DRV-003", phone: "+91 23456 78925", vehicle: "Mahindra - MH 03 CD 5678", rating: 4.3, trips: 760,  earnings: "54K", location: "Dadar, Mumbai" },
+//   { id: "4",  name: "Vijay Nair",    photo: "https://api.dicebear.com/7.x/personas/svg?seed=Vijay",   status: "Completed", driverId: "DRV-004", phone: "+91 23456 78926", vehicle: "Tata Ace - MH 04 EF 9012", rating: 4.9, trips: 1560, earnings: "95K", location: "Powai, Mumbai" },
+//   { id: "5",  name: "Deepak Singh",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Deepak",  status: "Canceled",  driverId: "DRV-005", phone: "+91 23456 78927", vehicle: "Ashok Leyland - MH 05 GH", rating: 4.1, trips: 430,  earnings: "31K", location: "Kurla, Mumbai" },
+//   { id: "6",  name: "Manoj Desai",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Manoj",   status: "Completed", driverId: "DRV-006", phone: "+91 23456 78928", vehicle: "Tata Ace - MH 06 IJ 3456", rating: 4.7, trips: 1120, earnings: "79K", location: "Thane, Mumbai" },
+//   { id: "7",  name: "Rahul Verma",   photo: "https://api.dicebear.com/7.x/personas/svg?seed=Rahul",   status: "Completed", driverId: "DRV-007", phone: "+91 23456 78929", vehicle: "Maruti - MH 07 KL 7890",   rating: 4.5, trips: 890,  earnings: "62K", location: "Borivali, Mumbai" },
+//   { id: "8",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
+//   { id: "9",  name: "Kiran Rao",     photo: "https://api.dicebear.com/7.x/personas/svg?seed=Kiran",   status: "Completed", driverId: "DRV-009", phone: "+91 23456 78931", vehicle: "Mahindra - MH 09 OP 6789", rating: 4.8, trips: 1380, earnings: "88K", location: "Goregaon, Mumbai" },
+//   { id: "10",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
+//   { id: "11",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
+//   { id: "12",  name: "Sanjay Joshi",  photo: "https://api.dicebear.com/7.x/personas/svg?seed=Sanjay",  status: "Canceled",  driverId: "DRV-008", phone: "+91 23456 78930", vehicle: "Tata Ace - MH 08 MN 2345", rating: 3.9, trips: 320,  earnings: "23K", location: "Malad, Mumbai" },
 
-];
+// ];
 
 
 

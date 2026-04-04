@@ -1,11 +1,15 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { Search, Download, MoreHorizontal, ChevronLeft, ChevronRight, ChevronDown } from "lucide-react";
 import { Transaction, TransactionStatus } from "@/Types/types";
 import { DUMMY_TRANSACTIONS } from "@/Data/mockdata";
 import { StatusBadgee } from "@/Component/layouts/ReuseFunUi";
-   import * as XLSX from "xlsx";
+import * as XLSX from "xlsx";
+import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/Redux/Store";
+import { fetchPaymentsRequest } from "@/Redux/PostSlice";
 
 
 const PAGE_SIZE = 7;
@@ -23,15 +27,88 @@ interface TransactionTableProps {
     transactions?: Transaction[];
 }
 
-export default function ({ transactions = DUMMY_TRANSACTIONS }: TransactionTableProps) {
+
+
+const token = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxOTE5MTU2YS0zMDQ2LTQyOTktYjQ0Ny0wYTllOTMxMWFmMDUiLCJtb2JpbGUiOiI5MzU5MjQ4ODAwIiwidHlwZSI6InVzZXIiLCJpYXQiOjE3NzUyODM2MjMsImV4cCI6MTc3NTI4NzIyM30.3TZl2ptg1P5kIV2I3ZRcDmxyqLJsO17sMSUJnyciOx4";
+
+// function getdata() {
+//     const res = axios.get("http://192.168.1.14:3000/api/v1/admin/payment-history", {
+//         headers: {
+//             Authorization: `Bearer ${token}`,
+//         },
+//     });
+//     //    @ts-ignore
+
+//     console.log(res.data);
+
+// }
+
+// getdata();
+
+
+export default function () {
     const [search, setSearch] = useState("");
     const [statusFilter, setStatusFilter] = useState<"all" | TransactionStatus>("all");
     const [page, setPage] = useState(1);
     const [menuOpen, setMenuOpen] = useState<string | null>(null);
     const [statusOpen, setStatusOpen] = useState(false);
 
+    // const [apiTransactions, setApiTransactions] = useState<Transaction[]>([]);
+    // const [loading, setLoading] = useState(true);
+    const dispatch = useDispatch();
+
+    const { payments, loading } = useSelector(
+        (state: RootState) => state.posts
+    );
+
+    useEffect(() => {
+        dispatch(fetchPaymentsRequest());
+    }, [dispatch]);
+
+
+    const apiTransactions: Transaction[] = useMemo(() => {
+        return payments.map((p: any) => ({
+            id: p.id,
+            trackingId: p.trackingId,
+            clientName: p.clientName,
+            deliveryPartnerName: p.driverName,
+            dateTime: p.createdAt,
+            amount: p.amount,
+            status: p.status.toLowerCase(),
+        }));
+    }, [payments]);
+
+    // useEffect(() => {
+    //     const fetchAllPayments = async () => {
+    //         try {
+    //             setLoading(true);
+    //             const res = await axios.get("http://192.168.1.14:3000/api/v1/admin/payment-history?limit=1000&page=1", {
+    //                 headers: { Authorization: `Bearer ${token}` },
+    //             });
+
+    //             const mapped: Transaction[] = res.data.data.map((p: any) => ({
+    //                 id: p.id,
+    //                 trackingId: p.trackingId,
+    //                 clientName: p.clientName,
+    //                 deliveryPartnerName: p.driverName,
+    //                 dateTime: p.createdAt,
+    //                 amount: p.amount,
+    //                 status: p.status.toLowerCase() as Transaction["status"],
+    //             }));
+
+    //             setApiTransactions(mapped);
+    //         } catch (err) {
+    //             console.error(err);
+    //         } finally {
+    //             setLoading(false);
+    //         }
+    //     };
+
+    //     fetchAllPayments();
+    // }, []);
+
     const filtered = useMemo(() => {
-        let list = [...transactions];
+        let list = [...apiTransactions];
         const q = search.trim().toLowerCase();
         if (q) {
             list = list.filter((t) =>
@@ -42,31 +119,35 @@ export default function ({ transactions = DUMMY_TRANSACTIONS }: TransactionTable
         }
         if (statusFilter !== "all") list = list.filter((t) => t.status === statusFilter);
         return list;
-    }, [transactions, search, statusFilter]);
+    }, [apiTransactions, search, statusFilter]);
+
 
     const totalPages = Math.max(1, Math.ceil(filtered.length / PAGE_SIZE));
     const safePage = Math.min(page, totalPages);
     const paged = filtered.slice((safePage - 1) * PAGE_SIZE, safePage * PAGE_SIZE);
 
+    if (loading) return <div className="text-center dark:text-taupe-200 py-10">Loading transactions...</div>;
 
-const handleExport = () => {
-    const data = filtered.map((t, i) => ({
-        "#": i + 1,
-        "Tracking ID": t.trackingId,
-        "Client Name": t.clientName,
-        "Delivery Partner": t.deliveryPartnerName,
-        "Date & Time": new Date(t.dateTime).toLocaleString(),
-        "Amount": t.amount,
-        "Status": t.status,
-    }));
 
-    const worksheet = XLSX.utils.json_to_sheet(data);
-    const workbook = XLSX.utils.book_new();
 
-    XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
+    const handleExport = () => {
+        const data = filtered.map((t, i) => ({
+            "#": i + 1,
+            "Tracking ID": t.trackingId,
+            "Client Name": t.clientName,
+            "Delivery Partner": t.deliveryPartnerName,
+            "Date & Time": new Date(t.dateTime).toLocaleString(),
+            "Amount": t.amount,
+            "Status": t.status,
+        }));
 
-    XLSX.writeFile(workbook, "transactions.xlsx");
-};
+        const worksheet = XLSX.utils.json_to_sheet(data);
+        const workbook = XLSX.utils.book_new();
+
+        XLSX.utils.book_append_sheet(workbook, worksheet, "Transactions");
+
+        XLSX.writeFile(workbook, "transactions.xlsx");
+    };
 
     const thBase = "px-4 py-3.5 text-left text-[11px] font-bold uppercase tracking-widest whitespace-nowrap  text-center text-white dark:text-zinc-100";
     const tdBase = "px-4 py-3.5 text-sm whitespace-nowrap border-b border-gray-100 dark:border-[#1e1e1e]";
@@ -188,7 +269,20 @@ const handleExport = () => {
 
                                             {/* Tracking ID */}
                                             <td className={tdBase}>
-                                                <span className="text-xs font-mono font-semibold text-gray-600 dark:text-zinc-400">{t.trackingId}</span>
+                                                <div className="relative group w-max">
+
+                                                    {/* Short ID */}
+                                                    <span className="text-xs font-mono font-semibold text-gray-600 dark:text-zinc-400">
+                                                        {t.trackingId.length > 7
+                                                            ? `${t.trackingId.slice(0, 7)}...`
+                                                            : t.trackingId}
+                                                    </span>
+
+                                                    {/* Full ID (Selectable on hover) */}
+                                                    <div className="absolute bottom-full  hidden group-hover:block bg-black text-white text-xs px-2 py-1 rounded whitespace-nowrap select-text">
+                                                        {t.trackingId}
+                                                    </div>
+                                                </div>
                                             </td>
 
                                             {/* Client name */}

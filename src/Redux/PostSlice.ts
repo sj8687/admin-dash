@@ -1,4 +1,4 @@
-import { DriverStats, PartnerDocs, PartnerListItem, VerifyDocsPayload } from "@/Types/types";
+import { DriverApi, DriverStats, PartnerDocs, PartnerListItem, PaymentApi, VerifyDocsPayload } from "@/Types/types";
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 
 
@@ -36,6 +36,20 @@ interface OrdersState {
   statsError: string | null;
 
 
+  drivers: DriverApi[];
+  driversLoading: boolean;
+  driversError: string | null;
+
+
+  //  driversActive: DriverApi[];
+  isActiveLoading: boolean;
+  toggleLoading: string | null;
+
+
+  payments: PaymentApi[];
+  loading: boolean;
+  paymenterror: string | null;
+
   error: string | null;
 }
 
@@ -65,8 +79,20 @@ const initialState: OrdersState = {
   statsLoading: false,
   statsError: null,
 
+  drivers: [],
+  driversLoading: false,
+  driversError: null,
+
+  // driversActive: [],
+  isActiveLoading: false,
+  toggleLoading: null,
+
   verifyLoading: false,
   verifyError: null,
+
+  payments: [],
+  loading: false,
+  paymenterror: null,
 
   error: null,
 };
@@ -155,20 +181,71 @@ const postSlice = createSlice({
     fetchDriverStatsRequest(state) {
       state.statsLoading = true;
     },
-
     fetchDriverStatsSuccess(state, action: PayloadAction<DriverStats>) {
       state.statsLoading = false;
       state.driverStats = action.payload;
     },
-
     fetchDriverStatsFailure(state, action: PayloadAction<string>) {
       state.statsLoading = false;
       state.statsError = action.payload;
     },
 
 
-  },
+    fetchDriversRequest(state) {
+      state.driversLoading = true;
+    },
+    fetchDriversSuccess(state, action: PayloadAction<DriverApi[]>) {
+      state.driversLoading = false;
+      state.drivers = action.payload;
+    },
+    fetchDriversFailure(state, action: PayloadAction<string>) {
+      state.driversLoading = false;
+      state.driversError = action.payload;
+    },
 
+
+
+
+    toggleDriverStatusRequest(
+      state,
+      action: PayloadAction<{ partnerId: string; isActive: boolean }>
+    ) {
+      state.toggleLoading = action.payload.partnerId;
+    },
+    toggleDriverStatusSuccess(
+      state,
+      action: PayloadAction<{ partnerId: string; isActive: boolean }>
+    ) {
+      const driver = state.drivers.find(
+        (d) => d.id === action.payload.partnerId
+      );
+
+      if (driver) {
+        driver.isActive = action.payload.isActive;
+      }
+
+      state.toggleLoading = null;
+    },
+    toggleDriverStatusFailure(state) {
+      state.toggleLoading = null;
+    },
+
+
+
+    fetchPaymentsRequest(state) {
+      state.loading = true;
+    },
+    fetchPaymentsSuccess(state, action: PayloadAction<PaymentApi[]>) {
+      state.loading = false;
+      state.payments = action.payload;
+    },
+    fetchPaymentsFailure(state, action: PayloadAction<string>) {
+      state.loading = false;
+      state.paymenterror = action.payload;
+    },
+
+
+  },
 
 });
 
@@ -196,7 +273,18 @@ export const {
   fetchDriverStatsRequest,
   fetchDriverStatsSuccess,
   fetchDriverStatsFailure,
-  
+
+  fetchDriversRequest,
+  fetchDriversSuccess,
+  fetchDriversFailure,
+
+  toggleDriverStatusRequest,
+  toggleDriverStatusSuccess,
+  toggleDriverStatusFailure,
+
+  fetchPaymentsRequest,
+  fetchPaymentsSuccess,
+  fetchPaymentsFailure,
 } = postSlice.actions;
 
 export default postSlice.reducer;

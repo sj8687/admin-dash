@@ -207,7 +207,9 @@ export interface Transaction {
   dateTime: string;
   amount: number;
   status: TransactionStatus;
+  Data?: any; 
 }
+
 
 
 export type DriverStatus = "On Route" | "Completed" | "Canceled";
@@ -215,11 +217,12 @@ export type DriverStatus = "On Route" | "Completed" | "Canceled";
 export interface Driver {
   id: string;
   name: string;
-  photo: string;
+  profilePhoto: string;
   status: DriverStatus;
   driverId: string;
   phone: string;
   vehicle: string;
+  vehicleRegistrationNumber: string;
   rating: number;
   trips: number;
   earnings: string;
@@ -353,4 +356,78 @@ export interface DriverStats {
   online_drivers: number;
   offline_drivers: number;
   blocked_drivers: number;
+}
+
+
+
+//driver details card
+export interface DriverApi {
+  id: string;
+  profilePhoto: string;
+  fullName: string  ;
+  status: DriverStatus;
+  mobileNumber: string;
+  vehicleBrandName: string;
+  vehicleRegistrationNumber: string;
+  address: string ;
+  isActive: boolean;
+
+  rating: number;
+  trips: number;
+  earnings: string;
+  location: string;
+}
+
+//card for driver compo
+export interface Driver {
+  id: string;
+  driverId: string;
+  name: string;
+  phone: string;
+  vehicle: string;
+  location: string;
+  vehicleRegistrationNumber: string;
+  isActive: boolean;
+  status: DriverStatus;
+
+  rating: number;
+  trips: number;
+  earnings: string;
+  profilePhoto: string;
+};
+
+
+
+//transaction table
+export interface PaymentApi {
+  id: string;
+  trackingId: string;
+  clientName: string;
+  driverName: string;
+  createdAt: string;
+  amount: number;
+  status: string;
+}
+
+export interface Payment {
+    id: string;
+    trackingId: string;
+    clientName: string;
+    driverName: string;
+    amount: number;
+    status: "SUCCESS" | "PENDING" | "FAILED";
+    method: string;
+    createdAt: string;
+}
+
+export interface PaymentResponse {
+    success: boolean;
+    message: string;
+    meta: {
+        total: number;
+        page: number;
+        limit: number;
+        totalPages: number;
+    };
+    data: Payment[];
 }

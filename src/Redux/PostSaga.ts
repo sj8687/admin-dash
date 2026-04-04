@@ -1,5 +1,5 @@
 import { call, put, takeLatest } from "redux-saga/effects";
-import { fetchPartnerDocs, getDriverStatusCountAPI, getPartnersAPI, loginAPI, logoutAPI, verifyPartnerDocsAPI, } from "./Api";
+import { fetchDriversAPI, fetchPartnerDocs, fetchPaymentsAPI, getDriverStatusCountAPI, getPartnersAPI, loginAPI, logoutAPI, toggleDriverStatusAPI, verifyPartnerDocsAPI, } from "./Api";
 import {
   loginRequest,
   loginSuccess,
@@ -19,6 +19,15 @@ import {
   fetchDriverStatsSuccess,
   fetchDriverStatsFailure,
   fetchDriverStatsRequest,
+  fetchDriversSuccess,
+  fetchDriversFailure,
+  fetchDriversRequest,
+  toggleDriverStatusSuccess,
+  toggleDriverStatusFailure,
+  toggleDriverStatusRequest,
+  fetchPaymentsSuccess,
+  fetchPaymentsFailure,
+  fetchPaymentsRequest,
 
 } from "./PostSlice";
 import type { SagaIterator } from "redux-saga";
@@ -106,6 +115,51 @@ function* handleFetchDriverStats(): any {
 }
 
 
+function* handleFetchDrivers(): any {
+  try {
+    const data = yield call(fetchDriversAPI);
+    yield put(fetchDriversSuccess(data));
+  } catch (error: any) {
+    yield put(fetchDriversFailure(error.message));
+  }
+}
+
+
+
+function* handleToggleDriver(action: any): any {
+  try {
+    const { partnerId, isActive } = action.payload;
+
+    yield call(toggleDriverStatusAPI, {
+      partnerId,
+      isActive,
+    });
+
+    yield put(
+      toggleDriverStatusSuccess({
+        partnerId,
+        isActive,
+      })
+    );
+  } catch (error) {
+    yield put(toggleDriverStatusFailure());
+  }
+}
+
+
+
+function* handleFetchPayments(): any {
+  try {
+    const data = yield call(fetchPaymentsAPI,);
+
+    yield put(fetchPaymentsSuccess(data));
+  } catch (error: any) {
+    yield put(fetchPaymentsFailure(error.message));
+  }
+}
+
+
+
 
 export default function* postSaga(): SagaIterator {
   yield takeLatest(loginRequest.type, handleLogin);
@@ -114,6 +168,9 @@ export default function* postSaga(): SagaIterator {
   yield takeLatest(getPartnerDocsRequest.type, handleGetPartnerDocs);
   yield takeLatest(verifyPartnerDocsRequest.type, handleVerifyPartnerDocs);
   yield takeLatest(fetchDriverStatsRequest.type, handleFetchDriverStats);
+  yield takeLatest(fetchDriversRequest.type, handleFetchDrivers);
+  yield takeLatest(toggleDriverStatusRequest.type, handleToggleDriver);
+   yield takeLatest(fetchPaymentsRequest.type, handleFetchPayments);
 
 }
 

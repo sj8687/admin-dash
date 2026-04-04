@@ -2,13 +2,12 @@
 
 import { useState, useEffect, useMemo, use } from "react";
 import { Trash2, MapPin, Star, Search, ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight, Download } from "lucide-react";
-import { Driver, DriverStatus, StatCard } from "@/Types/types";
-import { DRIVERS, DriverstatCards } from "@/Data/mockdata";
+import { Driver, DriverApi, DriverStatus, StatCard } from "@/Types/types";
 import StatCardComponent from "@/Component/dashboards/StatCard";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/Store";
-import { fetchDriverStatsRequest } from "@/Redux/PostSlice";
+import { fetchDriversRequest, fetchDriverStatsRequest, toggleDriverStatusRequest } from "@/Redux/PostSlice";
 import SkeletonCard from "@/Component/ui/StatsSkelton";
 
 
@@ -32,7 +31,25 @@ function StatusBadge({ status }: { status: DriverStatus }) {
 
 function DriverCard({ driver, onDelete }: { driver: Driver; onDelete: (id: string) => void }) {
 
-  const [blocked, setBlocked] = useState(false);
+  const dispatch = useDispatch();
+
+  const toggleLoading = useSelector(
+    (state: RootState) => state.posts.toggleLoading
+  );
+
+  const isBlocked = !driver.isActive;
+  const loading = toggleLoading === driver.id;
+
+  const handleToggle = () => {
+    dispatch(
+      toggleDriverStatusRequest({
+        partnerId: driver.id,
+        isActive: !driver.isActive,
+      })
+    );
+  };
+  console.log(driver);
+
 
   return (
     <div className="relative rounded-[10px] border p-4 flex flex-col gap-3
@@ -41,19 +58,22 @@ function DriverCard({ driver, onDelete }: { driver: Driver; onDelete: (id: strin
                     hover:shadow-md transition-shadow duration-200">
 
       {/* Delete btn */}
-      <button
+      {/* <button
         onClick={() => onDelete(driver.id)}
         className="absolute top-3 right-3 p-1.5 rounded-lg transition-colors
                    text-gray-400 hover:text-red-500 hover:bg-red-50
                    dark:text-zinc-600 dark:hover:text-red-400 dark:hover:bg-red-950/30"
       >
         <Trash2 size={14} />
-      </button>
+      </button> */}
+
+
+      {/* <span className="text-2xl text-white">{driver.isActive}</span> */}
 
       {/* Avatar + name + status */}
       <div className="flex items-center gap-3">
         <img
-          src={driver.photo}
+          src={driver.profilePhoto}
           alt={driver.name}
           className="w-14 h-14 rounded-full object-cover border-2 border-gray-100 dark:border-zinc-700 shrink-0"
           onError={(e) => { (e.target as HTMLImageElement).src = `https://api.dicebear.com/7.x/thumbs/svg?seed=${driver.id}`; }}
@@ -73,6 +93,7 @@ function DriverCard({ driver, onDelete }: { driver: Driver; onDelete: (id: strin
       <div className="px-3 py-2 rounded-lg text-xs text-gray-600 dark:text-zinc-400
                       bg-gray-100 dark:bg-[#1e1e1e]">
         {driver.vehicle}
+        <span className="text-gray-400 font-medium"> - {driver.vehicleRegistrationNumber}</span>
       </div>
 
       {/* Stats */}
@@ -100,22 +121,23 @@ function DriverCard({ driver, onDelete }: { driver: Driver; onDelete: (id: strin
           <MapPin size={12} className="text-red-400 shrink-0" />
           {driver.location}
         </div>
-
         <div className="flex items-center gap-2">
           <p className="text-[12px]">
-            {blocked ? "Blocked" : "Active"}
+            {isBlocked ? "Blocked" : "Active"}
           </p>
 
           <button
-            onClick={() => setBlocked(!blocked)}
+            onClick={handleToggle}
+            disabled={loading}
             className={`w-10 h-5 flex items-center rounded-full p-0.5 border transition
-      ${blocked ? "bg-red-500 border-red-500" : "bg-gray-100 border-gray-400"}
-    `}
+    ${isBlocked ? "bg-red-500 border-red-500" : "bg-gray-100 border-gray-400"}
+    ${loading ? "opacity-50 cursor-not-allowed" : ""}
+  `}
           >
             <div
               className={`w-4 h-4 rounded-full bg-white shadow transform transition
-        ${blocked ? "translate-x-5" : "translate-x-0"}
-      `}
+      ${isBlocked ? "translate-x-5" : "translate-x-0"}
+    `}
             />
           </button>
         </div>
@@ -222,7 +244,7 @@ function DriverSidebar() {
         </div>
         <ShipmentChart />
         <div className="flex justify-between text-[9px] text-gray-400 dark:text-zinc-600 mt-1 px-1">
-          {["2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023"].map((y) => (
+          {["jab", "feb", "mar", "api", "may", "jun", "juli", "aug"].map((y) => (
             <span key={y}>{y}</span>
           ))}
         </div>
@@ -275,24 +297,41 @@ function useColsPerPage() {
   return cols;
 }
 
+
+
+
+
 export default function DeliveryPartnerPage() {
-  const [drivers, setDrivers] = useState<Driver[]>(DRIVERS);
   const [search, setSearch] = useState("");
   const [page, setPage] = useState(1);
 
-  // const [cardss, setCards] = useState<StatCard[]>([]);
+  const dispatch = useDispatch();
+  const { driverStats, statsLoading, drivers, driversLoading } = useSelector(
+    (state: RootState) => state.posts
+  );
+
+  useEffect(() => {
+    dispatch(fetchDriverStatsRequest());
+    dispatch(fetchDriversRequest())
+  }, [dispatch]);
 
 
   const cols = useColsPerPage();
   const pageSize = cols * 3; // always 3 rows
 
   const handleDelete = (id: string) => {
-    setDrivers((prev) => prev.filter((d) => d.id !== id));
+    // setDrivers((prev) => prev.filter((d) => d.id !== id));
   };
 
-  const filtered = drivers.filter((d) => {
+  const mappedDrivers = useMemo(() => {
+    return drivers.map((d, i) => mapDriver(d, i));
+  }, [drivers]);
+
+
+  const filtered = mappedDrivers.filter((d) => {
     const q = search.trim().toLowerCase();
     if (!q) return true;
+
     return (
       d.name.toLowerCase().includes(q) ||
       d.driverId.toLowerCase().includes(q) ||
@@ -312,20 +351,20 @@ export default function DeliveryPartnerPage() {
   };
 
   const handleExport = () => {
-    const headers = ["#", "Driver ID", "Name", "Status", "Phone", "Vehicle", "Rating", "Trips", "Earnings", "Location"];
-    const rows = drivers.map((d, i) => [
-      i + 1, d.driverId, d.name, d.status, d.phone,
-      d.vehicle, d.rating, d.trips, `₹${d.earnings}`, d.location,
-    ]);
-    const bom = "\uFEFF";
-    const csv = bom + [headers, ...rows]
-      .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
-      .join("\n");
-    const blob = new Blob([csv], { type: "application/vnd.ms-excel;charset=utf-8" });
-    const url = URL.createObjectURL(blob);
-    const a = document.createElement("a");
-    a.href = url; a.download = "delivery_partners.xls"; a.click();
-    URL.revokeObjectURL(url);
+    // const headers = ["#", "Driver ID", "Name", "Status", "Phone", "Vehicle", "Rating", "Trips", "Earnings", "Location"];
+    // const rows = drivers.map((d, i) => [
+    //   i + 1, i, d.fullName, d.status, d.mobileNumber,
+    //   d.vehicleBrandName, d.rating, d.trips, `₹${d.earnings}`, d.address,
+    // ]);
+    // const bom = "\uFEFF";
+    // const csv = bom + [headers, ...rows]
+    //   .map((row) => row.map((cell) => `"${String(cell).replace(/"/g, '""')}"`).join(","))
+    //   .join("\n");
+    // const blob = new Blob([csv], { type: "application/vnd.ms-excel;charset=utf-8" });
+    // const url = URL.createObjectURL(blob);
+    // const a = document.createElement("a");
+    // a.href = url; a.download = "delivery_partners.xls"; a.click();
+    // URL.revokeObjectURL(url);
   };
 
   // Grid class: 3 cols default, 4 cols on xl (≥1280px)
@@ -351,14 +390,7 @@ export default function DeliveryPartnerPage() {
     return "neutral";                      // gray/yellow
   };
 
-  const dispatch = useDispatch();
-  const { driverStats, statsLoading } = useSelector(
-    (state: RootState) => state.posts
-  );
 
-  useEffect(() => {
-    dispatch(fetchDriverStatsRequest());
-  }, [dispatch]);
 
 
   const cards = useMemo(() => {
@@ -408,20 +440,25 @@ export default function DeliveryPartnerPage() {
   }, [driverStats]);
 
 
+  function mapDriver(apiDriver: DriverApi, index: number): Driver {
+    return {
+      id: apiDriver.id,
+      driverId: `DRV-${index + 1}`,
+      name: apiDriver.fullName || "Unknown Driver",
+      phone: apiDriver.mobileNumber || "N/A",
+      vehicle: apiDriver.vehicleBrandName || "Bike",
+      location: apiDriver.address || "Not Available",
+      vehicleRegistrationNumber: apiDriver.vehicleRegistrationNumber || "N/A",
+      isActive: apiDriver.isActive,
 
-async function handleFetchDriverStats() {
-  try {
-    const response = await axios.get(
-      "https://bar-lawyer-owned-brilliant.trycloudflare.com/api/v1/super-admin/partner/all"
-    );
+      status: "On Route",
+      rating: 4.2,
+      trips: 120,
+      earnings: "15000",
 
-    console.log(response.data);
-  } catch (error) {
-    console.log(error);
+      profilePhoto: apiDriver.profilePhoto || "/default-avatar.png",
+    };
   }
-}
-
-handleFetchDriverStats();
 
 
   return (
@@ -481,11 +518,8 @@ handleFetchDriverStats();
         {/* Left: grid + pagination */}
         <div className="flex-1 min-w-0 flex flex-col gap-4">
 
-          {paged.length === 0 ? (
-            <div className="flex items-center justify-center h-48 rounded-[10px] border border-dashed
-                            border-gray-200 dark:border-zinc-800 text-gray-400 dark:text-zinc-600 text-sm">
-              No drivers found{search ? ` for "${search}"` : ""}.
-            </div>
+          {driversLoading ? (
+            <div className="flex dark:text-gray-100 justify-center py-10">Loading drivers...</div>
           ) : (
             <div className={gridClass}>
               {paged.map((driver) => (
@@ -493,6 +527,8 @@ handleFetchDriverStats();
               ))}
             </div>
           )}
+
+
 
           {/* ── Pagination ── */}
           <div className="flex items-center justify-between pt-1">
